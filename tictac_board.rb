@@ -41,4 +41,9 @@ class Tictac_board
             @win<<arr
         end
     end
+
+    def board_full?() #method that returns false if the gameboard is full else returns true
+         board.values.any? { |positions| (1..(@size*@size)).include?(positions) }
+    end
+
 end

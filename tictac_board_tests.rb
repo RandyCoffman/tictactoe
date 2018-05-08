@@ -84,4 +84,18 @@ class Tictac_board_test < Minitest::Test
         assert_equal(winner[7], [3, 5, 7])
     end
 
+    def test_board_full?
+    	tictac = Tictac_board.new(3)
+    	full = tictac.board_full?
+
+    	assert_equal(true, full)
+    end
+
+    def test_board_empty
+    	tictac = Tictac_board.new(0)
+    	full = tictac.board_full?
+
+    	assert_equal(false, full)
+    end
+
 end
