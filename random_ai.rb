@@ -1,4 +1,4 @@
-require_relative "board.rb"
+require_relative "tictac_board.rb"
 
 class Random_ai 
     
@@ -6,9 +6,9 @@ class Random_ai
         @size = size
     end
 
-    def choice(board_class,player)#random ai makes a random move based upon whats available
+    def choice(board_class,player)
         board = board_class.board
-        choice = (1..(@size*@size)).to_a[rand(@size*@size - 1)].to_s
+        choice = (1..(@size * @size)).to_a[rand(@size * @size - 1)].to_s
         board[choice].class == Integer ? choice : choice(board_class,player)
     end
 end

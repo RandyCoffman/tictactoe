@@ -74,4 +74,20 @@ class Tictac_board
         @board["#{position}"] = marker
     end
 
+    def print_board()
+        rows = @board.values.each_slice(@size).to_a
+        rows.each do |row|
+            string =""
+            line = ""
+            row.each do |item|
+                line +=" - "
+
+                string+="|#{item.to_s}|"
+            end
+            p line
+            p string
+            p line
+        end
+    end
+
 end
