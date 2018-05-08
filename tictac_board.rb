@@ -42,8 +42,12 @@ class Tictac_board
         end
     end
 
-    def board_full?() #method that returns false if the gameboard is full else returns true
+    def board_full?() 
          board.values.any? { |positions| (1..(@size*@size)).include?(positions) }
     end
 
+    def valid_position?(choice)
+        @board["#{choice}"] == choice && @board["#{choice}"] != "x" && @board["#{choice}"] != "o"
+    end
+    
 end

@@ -98,4 +98,52 @@ class Tictac_board_test < Minitest::Test
     	assert_equal(false, full)
     end
 
+    def test_for_valid_spot_valid
+        tictac = Tictac_board.new(3)
+        tictac.board = {"1"=>1,"2"=>2,"3"=>3,"4"=>4,"5"=>5,"6"=>6,"7"=>7,"8"=>8,"9"=>9}
+        validation = tictac.valid_position?(3)
+
+        assert_equal(true, validation)
+    end
+
+    def test_for_valid_spot_valid2
+        tictac = Tictac_board.new(3)
+        tictac.board = {"1"=>1,"2"=>2,"3"=>3,"4"=>4,"5"=>5,"6"=>6,"7"=>7,"8"=>8,"9"=>9}
+        validation = tictac.valid_position?(7)
+
+        assert_equal(true, validation)
+    end
+
+    def test_for_valid_spot_valid3
+        tictac = Tictac_board.new(3)
+        tictac.board = {"1"=>1,"2"=>2,"3"=>3,"4"=>4,"5"=>5,"6"=>6,"7"=>7,"8"=>8,"9"=>9}
+        validation = tictac.valid_position?(8)
+
+        assert_equal(true, validation)
+    end
+
+    def test_for_valid_spot_invalid
+        tictac = Tictac_board.new(3)
+        tictac.board = {"1"=>"x","2"=>2,"3"=>3,"4"=>4,"5"=>5,"6"=>6,"7"=>7,"8"=>8,"9"=>9}
+        validation = tictac.valid_position?(1)
+
+        assert_equal(false, validation)
+    end
+
+    def test_for_valid_spot_invalid2
+        tictac = Tictac_board.new(3)
+        tictac.board = {"1"=>1,"2"=>2,"3"=>3,"4"=>4,"5"=>"x","6"=>6,"7"=>7,"8"=>8,"9"=>9}
+        validation = tictac.valid_position?(5)
+
+        assert_equal(false, validation)
+    end
+
+    def test_for_valid_spot_invalid3
+        tictac = Tictac_board.new(3)
+        tictac.board = {"1"=>1,"2"=>2,"3"=>3,"4"=>4,"5"=>5,"6"=>6,"7"=>7,"8"=>8,"9"=>"o"}
+        validation = tictac.valid_position?(9)
+
+        assert_equal(false, validation)
+    end
+
 end
