@@ -1,0 +1,10 @@
+Set up the game
+    Create a board to play on
+    Create a 2 players
+Start the game
+    Call the board
+    Ask player what postion they want and check all current positions
+    If the game ends
+        Player # wins
+    Else
+        Switch to the next player
