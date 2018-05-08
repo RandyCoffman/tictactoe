@@ -20,25 +20,25 @@ class Tictac_board
 
         # Makes each possible win by using rows
         for row in 1..@size do
-            @win<<((((row-1)*@size)+1)..(@size*row)).to_a
+            @win<<((((row - 1) * @size) + 1)..(@size * row)).to_a
         end
 
         # Makes each possible win by using columns
         for col in 1..@size do 
             arr = Array.new
-            for num in 0..(@size-1) do 
-                arr.push((num*@size)+col)
+            for number in 0..(@size-1) do 
+                arr.push((number * @size) + col)
             end
-            @win<<arr
+            @win << arr
         end
 
         # Makes each possible win by using diagonals
         for dia in [[1,(@size+1)],[@size,(@size-1)]] do
             arr = Array.new
-            for num in 0..(@size-1) do
-                arr.push(dia[0]+(num*dia[1]))
+            for number in 0..(@size - 1) do
+                arr.push(dia[0] + (number * dia[1]))
             end
-            @win<<arr
+            @win << arr
         end
     end
 
@@ -49,5 +49,29 @@ class Tictac_board
     def valid_position?(choice)
         @board["#{choice}"] == choice && @board["#{choice}"] != "x" && @board["#{choice}"] != "o"
     end
-    
+
+ def winner_or_loser?()
+        loser = Array.new
+        @win.each do |win|
+            winner = []
+            for number in 0..(@size-2) do
+                # p @board["#{win[num]}"]
+                # p @board["#{win[num+1]}"]
+                winner.push(@board["#{win[number]}"] == @board["#{win[number+1]}"])
+                # p "#{arr} arr here"
+            end
+            loser << winner.include?(false)
+            # p "#{not_a_winner} winner here"
+        end
+        loser.include?(false)
+    end
+
+    def valid_position_input?(choice)
+        (1..(@size*@size)).to_a.include?(choice.to_i)
+    end
+
+    def update_board_with_position(marker,position)
+        @board["#{position}"] = marker
+    end
+
 end

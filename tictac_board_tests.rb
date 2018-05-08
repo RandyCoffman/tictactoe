@@ -146,4 +146,85 @@ class Tictac_board_test < Minitest::Test
         assert_equal(false, validation)
     end
 
+	def test_for_winner
+        tictac = Tictac_board.new(3)
+        tictac.board = {"1"=>1,"2"=>2,"3"=>"x","4"=>4,"5"=>5,"6"=>"x","7"=>7,"8"=>8,"9"=>"x"}
+        winner = tictac.winner_or_loser?
+
+        assert_equal(true, winner)
+    end
+
+	def test_for_winner2
+        tictac = Tictac_board.new(3)
+        tictac.board = {"1"=>"o","2"=>"o","3"=>"o","4"=>4,"5"=>5,"6"=>6,"7"=>7,"8"=>8,"9"=>9}
+        winner = tictac.winner_or_loser?
+
+        assert_equal(true, winner)
+    end
+
+	def test_for_loser
+        tictac = Tictac_board.new(3)
+        tictac.board = {"1"=>"o","2"=>"x","3"=>"o","4"=>4,"5"=>5,"6"=>6,"7"=>7,"8"=>8,"9"=>9}
+        winner = tictac.winner_or_loser?
+
+        assert_equal(false, winner)
+    end
+
+	def test_for_loser2
+        tictac = Tictac_board.new(3)
+        tictac.board = {"1"=>"o","2"=>"x","3"=>"o","4"=>4,"5"=>"o","6"=>"x","7"=>7,"8"=>"x","9"=>9}
+        winner = tictac.winner_or_loser?
+
+        assert_equal(false, winner)
+    end
+
+    def test_for_valid_input
+        tictac = Tictac_board.new(3)
+        valid = tictac.valid_position_input?(1)
+
+        assert_equal(true, valid)
+    end  
+
+    def test_for_valid_input2
+        tictac = Tictac_board.new(5)
+        valid = tictac.valid_position_input?(10)
+
+        assert_equal(true, valid)
+    end  
+
+    def test_for_invalid_input
+        tictac = Tictac_board.new(3)
+        valid = tictac.valid_position_input?(10)
+        
+        assert_equal(false, valid)
+    end
+
+    def test_for_invalid_input2
+        tictac = Tictac_board.new(5)
+        valid = tictac.valid_position_input?(26)
+        
+        assert_equal(false, valid)
+    end
+
+    def test_for_updating_position
+        tictac = Tictac_board.new(3)
+        position = tictac.update_board_with_position("x", 2)
+        
+        assert_equal("x", position)
+    end
+
+    def test_for_updating_position2
+        tictac = Tictac_board.new(3)
+        position = tictac.update_board_with_position("o", 7)
+        
+        assert_equal("o", position)
+    end
+
+    def test_for_updating_position3
+        tictac = Tictac_board.new(2)
+        position = tictac.update_board_with_position("x", 9)
+        
+        assert_equal("x", position)
+    end
+
 end
