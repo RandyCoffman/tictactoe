@@ -3,7 +3,7 @@ class TicTac_player
 attr_accessor :player, :player2
 
     def initialize
-        @player = "x"
+        @player = "x" 
     end
 
     def change_icon()

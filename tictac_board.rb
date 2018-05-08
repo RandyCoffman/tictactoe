@@ -20,20 +20,20 @@ class Tictac_board
 
         # Makes each possible win by using rows
         for row in 1..@size do
-            @win<<((((row - 1) * @size) + 1)..(@size * row)).to_a
+            @win << ((((row - 1) * @size) + 1)..(@size * row)).to_a
         end
 
         # Makes each possible win by using columns
         for col in 1..@size do 
             arr = Array.new
-            for number in 0..(@size-1) do 
+            for number in 0..(@size - 1) do 
                 arr.push((number * @size) + col)
             end
             @win << arr
         end
 
         # Makes each possible win by using diagonals
-        for dia in [[1,(@size+1)],[@size,(@size-1)]] do
+        for dia in [[1,(@size + 1)],[@size,(@size - 1)]] do
             arr = Array.new
             for number in 0..(@size - 1) do
                 arr.push(dia[0] + (number * dia[1]))
@@ -67,7 +67,7 @@ class Tictac_board
     end
 
     def valid_position_input?(choice)
-        (1..(@size*@size)).to_a.include?(choice.to_i)
+        (1..(@size * @size)).to_a.include?(choice.to_i)
     end
 
     def update_board_with_position(marker,position)
