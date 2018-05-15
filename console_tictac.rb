@@ -4,7 +4,6 @@ require_relative "random_ai.rb"
 require_relative "sequential_ai.rb"
 
 
-
 def console_game()
     player_arr = prelude
     size = player_arr.pop
@@ -13,7 +12,7 @@ def console_game()
     counter = 0
     outcome = " "
     until outcome != " "
-        p "player '#{player.player}' turn"
+        p "Player '#{player.player}' turn"
         game_board.print_board()
         if player_arr[(counter % 2)] == "player"
            choice = player_move(game_board)
@@ -27,7 +26,7 @@ def console_game()
             outcome = "Tie!"
         end
         player.change_icon()
-        counter+=1
+        counter += 1
     end
     game_board.print_board
     p outcome
@@ -50,13 +49,13 @@ def player_move(game_board)
     end
 end
 
-def chose_ai(player,size,marke)
+def choose_ai(player,size,marker)
     if player == "ai 1"
-        Random_ai.new(size,marke)
+        Random_ai.new(size,marker)
     elsif player == "ai 2"
-        Sequential_ai.new(size,marke)
+        Sequential_ai.new(size,marker)
     elsif player == "ai 3"
-        Ai.new(size,marke)
+        Unbeatable_ai.new(size,marker)
     else
         player
     end
@@ -112,10 +111,10 @@ def how_difficult(size,marker)
     p "1 is easy, 2 is medium and 3 is unbeatable difficulty"
     choice = gets.chomp
     if ["3", "1", "2"].include?(choice) 
-        chose_ai("ai " + choice,size,marker)
+        choose_ai("ai " + choice,size,marker)
     else
         p "Incorrect Input"
-        how_many()
+        how_difficult(size,marker)
     end
 end
 

@@ -50,18 +50,14 @@ class Tictac_board
         @board["#{choice}"] == choice && @board["#{choice}"] != "x" && @board["#{choice}"] != "o"
     end
 
- def winner_or_loser?()
+    def winner_or_loser?()
         loser = Array.new
         @win.each do |win|
             winner = []
             for number in 0..(@size-2) do
-                # p @board["#{win[num]}"]
-                # p @board["#{win[num+1]}"]
                 winner.push(@board["#{win[number]}"] == @board["#{win[number+1]}"])
-                # p "#{arr} arr here"
             end
             loser << winner.include?(false)
-            # p "#{not_a_winner} winner here"
         end
         loser.include?(false)
     end
@@ -71,7 +67,7 @@ class Tictac_board
     end
 
     def update_board_with_position(marker,position)
-        @board["#{position}"] = marker
+        @board["#{position}"] = marker if valid_position?(position) == true
     end
 
     def print_board()

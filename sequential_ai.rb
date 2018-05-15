@@ -1,17 +1,19 @@
 require_relative "tictac_board.rb"
 
-class Sequential_ai 
+class Sequential_ai
     
     def initialize(size,marker)
         @size = size
-        @num = 0
     end
 
-    def choice(board_class,player)#sequence ai makes a move in a certain sequence
+    def choice(board_class,player)
         board = board_class.board
-        move_choice = (1..(@size * @size)).to_a.shuffle(random: Random.new(@size))[@num]
-        @num += 1
-        board[move_choice.to_s].class == Integer ? move_choice.to_i : choice(board_class,player)
+       	move = (1..9).to_a
+       	counter = 0
+       	until board_class.valid_position?(move[counter].to_i) != false
+       		counter += 1
+       		move[counter].to_i
+       	end
+		move[counter].to_i
     end
-   
 end

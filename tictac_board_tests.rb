@@ -221,8 +221,17 @@ class Tictac_board_test < Minitest::Test
     end
 
     def test_for_updating_position3
-        tictac = Tictac_board.new(2)
-        position = tictac.update_board_with_position("x", 9)
+        tictac = Tictac_board.new(3)
+        tictac.board = {"1"=>1,"2"=>2,"3"=>3,"4"=>4,"5"=>5,"6"=>6,"7"=>7,"8"=>8,"9"=>"o"}
+        position = tictac.update_board_with_position("x", 8)
+        
+        assert_equal("x", position)
+    end
+
+    def test_for_updating_position4
+        tictac = Tictac_board.new(3)
+        tictac.board = {"1"=>"o","2"=>"x","3"=>"o","4"=>4,"5"=>"o","6"=>"x","7"=>7,"8"=>"x","9"=>9}
+        position = tictac.update_board_with_position("x", 4)
         
         assert_equal("x", position)
     end

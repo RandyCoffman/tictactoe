@@ -8,7 +8,12 @@ class Random_ai
 
     def choice(board_class,player)
         board = board_class.board
-        choice = (1..(@size * @size)).to_a[rand(@size * @size - 1)].to_s
-        board[choice].class == Integer ? choice : choice(board_class,player)
+       	move = rand(1..9)
+       	if board_class.valid_position?(move) == false
+       		choice(board_class,player)
+       	else
+       		move
+       	end
+
     end
 end
