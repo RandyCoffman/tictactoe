@@ -8,7 +8,7 @@ class Sequential_ai
 
     def choice(board_class,player)
         board = board_class.board
-       	move = (1..@size*@size).to_a
+       	move = (1..@size**2).to_a
        	counter = 0
        	until board_class.valid_position?(move[counter].to_i) != false
        		counter += 1
