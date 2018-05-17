@@ -11,12 +11,13 @@ class Tictac_board
     end
 
     def board_generator()
-        for board_size in 1..(@size*@size) do
+        # makes the board size whatever @size is to the power of 2, so if you enter 3 for size you will get a normal board.
+        for board_size in 1..(@size**2) do
                 @board["#{board_size}"] = board_size
         end
     end
 
-    def win_generator() # Method that generates winning moves based on @size of the board
+    def win_generator() # Generates winning moves based on @size of the board. Includes row, diagonal, and column wins
 
         # Makes each possible win by using rows
         for row in 1..@size do
@@ -25,25 +26,25 @@ class Tictac_board
 
         # Makes each possible win by using columns
         for col in 1..@size do 
-            arr = Array.new
+            win_combo = []
             for number in 0..(@size - 1) do 
-                arr.push((number * @size) + col)
+                win_combo.push((number * @size) + col)
             end
-            @win << arr
+            @win << win_combo
         end
 
         # Makes each possible win by using diagonals
         for dia in [[1,(@size + 1)],[@size,(@size - 1)]] do
-            arr = Array.new
+            win_combo = []
             for number in 0..(@size - 1) do
-                arr.push(dia[0] + (number * dia[1]))
+                win_combo.push(dia[0] + (number * dia[1]))
             end
-            @win << arr
+            @win << win_combo
         end
     end
 
     def board_full?() 
-         board.values.any? { |positions| (1..(@size*@size)).include?(positions) }
+         board.values.any? { |positions| (1..(@size**2)).include?(positions) }
     end
 
     def valid_position?(choice)
@@ -51,7 +52,7 @@ class Tictac_board
     end
 
     def winner_or_loser?()
-        loser = Array.new
+        loser = []
         @win.each do |win|
             winner = []
             for number in 0..(@size-2) do
@@ -63,7 +64,7 @@ class Tictac_board
     end
 
     def valid_position_input?(choice)
-        (1..(@size * @size)).to_a.include?(choice.to_i)
+        (1..(@size**2)).to_a.include?(choice.to_i)
     end
 
     def update_board_with_position(marker,position)

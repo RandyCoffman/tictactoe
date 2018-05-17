@@ -8,7 +8,7 @@ class Random_ai
 
     def choice(board_class,player)
         board = board_class.board
-       	move = rand(1..@size*@size)
+       	move = rand(1..@size**2)
        	if board_class.valid_position?(move) == false
        		choice(board_class,player)
        	else

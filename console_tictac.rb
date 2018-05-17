@@ -2,26 +2,26 @@ require_relative "tictac_board.rb"
 require_relative "tictac_player.rb"
 require_relative "random_ai.rb"
 require_relative "sequential_ai.rb"
-
+require_relative "unbeatable_ai.rb"
 
 def console_game()
-    player_arr = prelude
-    size = player_arr.pop
+    player_array = preamble
+    size = player_array.pop
     game_board = Tictac_board.new(size)
     player = TicTac_player.new()
     counter = 0
     outcome = " "
     until outcome != " "
-        p "Player '#{player.player}' turn"
+        p "Player '#{player.player}' turn!"
         game_board.print_board()
-        if player_arr[(counter % 2)] == "player"
+        if player_array[(counter % 2)] == "player"
            choice = player_move(game_board)
         else
-           choice = player_arr[(counter % 2)].choice(game_board,player)
+           choice = player_array[(counter % 2)].choice(game_board,player)
         end
         game_board.update_board_with_position(player.player,choice)
         if game_board.winner_or_loser?()
-            outcome = "Player #{player.player} wins"
+            outcome = "Player #{player.player} wins!"
         elsif game_board.board_full? == false
             outcome = "Tie!"
         end
@@ -36,13 +36,8 @@ end
 def player_move(game_board)
     p "Please select a position"
     choice = gets.chomp
-    if game_board.valid_position_input?(choice.to_i)
-        if game_board.valid_position?(choice.to_i)
-            choice.to_i
-        else
-            p "That position has already been taken"
-            player_move(game_board)
-        end
+    if game_board.valid_position?(choice.to_i)
+        choice.to_i
     else
         p "Invalid move"
         player_move(game_board)
@@ -63,33 +58,34 @@ end
 
 
 
-def prelude()
+def preamble()
     size = board_size()
     choice = how_many()
     if choice == "0"
-        player1 = how_difficult(size,"x")
-        player2 = how_difficult(size,"o")
+        player1 = difficulty(size,"x")
+        player2 = difficulty(size,"o")
     elsif choice == "1"
         if first?()
             player1 = "player"
-            player2 = how_difficult(size,"o")
+            player2 = difficulty(size,"o")
         else
-            player1 = how_difficult(size,"x")
+            player1 = difficulty(size,"x")
             player2 = "player"
         end
     else
         player1 = "player"
         player2 = "player"
     end
+    # Player array lists the players and the size of the board
     [player1, player2, size.to_i]
 end
 
 def first?()
-    p "Would you like to go first 'y' 'n'"
+    p "Would you like to go first? 'Yes' or 'No' are valid choices"
     choice = gets.chomp
-    if choice == 'y'
+    if choice.downcase == 'yes'
         true
-    elsif choice == "n"
+    elsif choice.downcase == "no"
         false
     else
         p "Incorrect Input"
@@ -98,23 +94,24 @@ def first?()
 end    
 
 def board_size()
-    p "What Size Board do You want 3-5"
+    p "What board size would you want? 3-5 are valid choices, 3 is a normal 3 by 3 board"
     choice = gets.chomp
     if choice.to_i > 2 && choice.to_i < 6
         choice.to_i
     else
+    	p "wrong size choice"
         board_size()
     end
 end
 
-def how_difficult(size,marker)
+def difficulty(size,marker)
     p "1 is easy, 2 is medium and 3 is unbeatable difficulty"
     choice = gets.chomp
     if ["3", "1", "2"].include?(choice) 
         choose_ai("ai " + choice,size,marker)
     else
         p "Incorrect Input"
-        how_difficult(size,marker)
+        difficulty(size,marker)
     end
 end
 
