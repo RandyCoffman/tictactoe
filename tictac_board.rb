@@ -43,15 +43,15 @@ class Tictac_board
         end
     end
 
-    def board_full?() 
+    def board_full?() # Checks to see if the board has anymore positions available
          board.values.any? { |positions| (1..(@size**2)).include?(positions) }
     end
 
-    def valid_position?(choice)
+    def valid_position?(choice) # Checks to see if position has an 'x' or 'o'. If they do it returns false, if not then it returns true
         @board["#{choice}"] == choice && @board["#{choice}"] != "x" && @board["#{choice}"] != "o"
     end
 
-    def winner_or_loser?() # decides if the array has a winning combo or notS
+    def winner_or_loser?() # Returns true if winner and false if loser
         loser = []
         @win.each do |win|
             winner = []
@@ -63,7 +63,7 @@ class Tictac_board
         loser.include?(false)
     end
 
-    def valid_position_input?(choice)
+    def valid_position_input?(choice) # checks to see if position is even on the game
         (1..(@size**2)).to_a.include?(choice.to_i)
     end
 

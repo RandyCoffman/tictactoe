@@ -58,11 +58,13 @@ def choose_ai(player,size,marker)
     end
 end
 
+# ai vs ai
 def no_human_players(size)
     @player1 = difficulty(size,"x")
     @player2 = difficulty(size,"o")
 end
 
+# player vs ai, if first? is true then player goes first and if not then player goes second
 def human_player_and_ai(size)
 	if first?()
         @player1 = "player"
@@ -73,11 +75,13 @@ def human_player_and_ai(size)
     end
 end
 
+# player vs player, player1 goes first, player2 goes second
 def human_and_human_player(size)
 	@player1 = "player"
     @player2 = "player"
 end
 
+# intro of the game
 def preamble()
     size = board_size()
     choice = how_many_human_players()
@@ -92,6 +96,7 @@ def preamble()
     [@player1, @player2, size.to_i]
 end
 
+# Sees if the player would like to go first or not
 def first?()
     p "Would you like to go first? 'Yes' or 'No' are valid choices"
     choice = gets.chomp
@@ -105,6 +110,7 @@ def first?()
     end
 end    
 
+# choice of the size of the board
 def board_size()
     p "What board size would you want? 3-5 are valid choices, 3 is a normal 3 by 3 board"
     choice = gets.chomp
@@ -116,6 +122,7 @@ def board_size()
     end
 end
 
+# Sets the ai difficulty
 def difficulty(size,marker)
     p "1 is easy, 2 is medium, and 3 is unbeatable difficulty"
     choice = gets.chomp
@@ -127,7 +134,7 @@ def difficulty(size,marker)
     end
 end
 
-
+# Sets how many human players are interacting with the game
 def how_many_human_players()
     p  "How many human players [0: ai vs ai 1: player vs ai, 2: player vs player]"
     choice = gets.chomp
