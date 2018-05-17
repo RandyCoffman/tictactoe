@@ -14,10 +14,13 @@ def console_game()
     until outcome != " "
         p "Player '#{player.player}' turn!"
         game_board.print_board()
-        # player_counter is used to make sure the human player and ai player get to move or else the ai will have to be controlled
+# player_counter is used to make sure the human player and ai player get to move or else the ai will have to be controlled
+# counter works with modulus 2 since the first time and every other time it will be 0
+# the second and every other time after that will be 1, which tells the game that it's the ai moving
         if player_array[(player_counter % 2)] == "player"
            choice = player_move(game_board)
         else
+# Ai movement
            choice = player_array[(player_counter % 2)].choice(game_board,player)
         end
         game_board.update_board_with_position(player.player,choice)
@@ -85,7 +88,7 @@ def preamble()
     else
     	human_and_human_player(size)
     end
-    # Player array lists the players and the size of the board
+# Player array lists the players and the size of the board
     [@player1, @player2, size.to_i]
 end
 
