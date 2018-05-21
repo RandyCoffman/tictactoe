@@ -48,7 +48,7 @@ class Tictac_unbeatable_ai_test < Minitest::Test
 		testing = unbeatable.spot_chosen(board,player)
 		# p testing
 
-		assert_equal([3,5], testing)
+		assert_equal([6,8], testing)
 	end
 
 	def test_chosen_spot2
@@ -59,7 +59,30 @@ class Tictac_unbeatable_ai_test < Minitest::Test
 		testing = unbeatable.spot_chosen(board,player)
 		# p testing
 
-		assert_equal([6,8], testing)
+		assert_equal([3,5], testing)
 	end
+
+	def test_copy_of_board
+		unbeatable = Unbeatable_ai.new(3,"x")
+		board = Tictac_board.new(3)
+		player = TicTac_player.new
+		testing = unbeatable.board_copy(board)
+		p testing
+
+		assert_equal({"1"=>1, "2"=>2, "3"=>3, "4"=>4, "5"=>5, "6"=>6, "7"=>7, "8"=>8, "9"=>9}, testing)
+	end
+
+	def test_the_winning_move
+		unbeatable = Unbeatable_ai.new(3,"x")
+		board = Tictac_board.new(3)
+		board.board = {"1"=>1,"2"=>2,"3"=>"o","4"=>4,"5"=>"o","6"=>"x","7"=>7,"8"=>"x","9"=>"x"}
+		player = TicTac_player.new
+		testing = unbeatable.test_winning_move(board, player.player, 7)
+
+		assert_equal([[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]], testing)
+	end
+	123
+	456
+	789
 
 end
