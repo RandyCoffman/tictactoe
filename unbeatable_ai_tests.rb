@@ -69,9 +69,76 @@ class Tictac_unbeatable_ai_test < Minitest::Test
 		assert_equal([2, 3, 5, 6, 9], testing)
 	end
 
+	def test_corners
+		unbeatable = Unbeatable_ai.new(3,"o")
+		board = Tictac_board.new(3)
+		testing = unbeatable.corner_position(board)
+		# p testing
 
-	123
-	456
-	789
+		assert_equal([1, 3, 7, 9], testing)
+	end
+
+	def test_corners2
+		unbeatable = Unbeatable_ai.new(5,"o")
+		board = Tictac_board.new(5)
+		testing = unbeatable.corner_position(board)
+		# p testing
+
+		assert_equal([1, 5, 21, 25], testing)
+	end
+
+	def test_corners3
+		unbeatable = Unbeatable_ai.new(7,"o")
+		board = Tictac_board.new(7)
+		testing = unbeatable.corner_position(board)
+		# p testing
+
+		assert_equal([1, 7, 43, 49], testing)
+	end
+
+	def test_corners4
+		unbeatable = Unbeatable_ai.new(9,"o")
+		board = Tictac_board.new(9)
+		testing = unbeatable.corner_position(board)
+		# p testing
+
+		assert_equal([1, 9, 73, 81], testing)
+	end
+
+	def test_middle
+		unbeatable = Unbeatable_ai.new(3,"o")
+		board = Tictac_board.new(3)
+		testing = unbeatable.middle_position(board)
+		# p testing
+
+		assert_equal("5", testing)
+	end
+
+	def test_middle2
+		unbeatable = Unbeatable_ai.new(5,"o")
+		board = Tictac_board.new(5)
+		testing = unbeatable.middle_position(board)
+		# p testing
+
+		assert_equal("13", testing)
+	end
+
+	def test_middle3
+		unbeatable = Unbeatable_ai.new(7,"o")
+		board = Tictac_board.new(7)
+		testing = unbeatable.middle_position(board)
+		# p testing
+
+		assert_equal("25", testing)
+	end
+
+	def test_middle4
+		unbeatable = Unbeatable_ai.new(9,"o")
+		board = Tictac_board.new(9)
+		testing = unbeatable.middle_position(board)
+		# p testing
+
+		assert_equal("41", testing)
+	end
 
 end
