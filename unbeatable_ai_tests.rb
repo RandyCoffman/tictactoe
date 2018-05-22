@@ -9,87 +9,64 @@ class Tictac_unbeatable_ai_test < Minitest::Test
 		assert_equal(true, true)
 	end
 
-	def test_available_spots
+	def test_spots_taken_by_o
 		unbeatable = Unbeatable_ai.new(3,"o")
 		board = Tictac_board.new(3)
 		board.board = {"1"=>"o","2"=>"x","3"=>"o","4"=>4,"5"=>"o","6"=>"x","7"=>7,"8"=>"x","9"=>9}
-		testing = unbeatable.moves_available(board)
+		testing = unbeatable.spot_chosen_by_x(board)
 		# p testing
 
-		assert_equal([4, 7, 9], testing)
+		assert_equal([2, 6, 8], testing)
 	end
 
-	def test_available_spots2
+	def test_spots_taken_by_o2
 		unbeatable = Unbeatable_ai.new(3,"o")
+		board = Tictac_board.new(3)
+		board.board = {"1"=>"o","2"=>"x","3"=>"x","4"=>4,"5"=>"x","6"=>"o","7"=>7,"8"=>"x","9"=>"x"}
+		testing = unbeatable.spot_chosen_by_x(board)
+		# p testing
+
+		assert_equal([2, 3, 5, 8, 9], testing)
+	end
+
+	def test_spots_taken_by_o3
+		unbeatable = Unbeatable_ai.new(3,"o")
+		board = Tictac_board.new(3)
+		board.board = {"1"=>"o","2"=>"x","3"=>"x","4"=>"o","5"=>"o","6"=>"x","7"=>"o","8"=>"x","9"=>9}
+		testing = unbeatable.spot_chosen_by_x(board)
+		# p testing
+
+		assert_equal([2, 3, 6, 8], testing)
+	end
+
+	def test_spots_taken_by_x
+		unbeatable = Unbeatable_ai.new(3,"x")
 		board = Tictac_board.new(3)
 		board.board = {"1"=>"o","2"=>"x","3"=>3,"4"=>4,"5"=>"o","6"=>6,"7"=>7,"8"=>8,"9"=>9}
-		testing = unbeatable.moves_available(board)
+		testing = unbeatable.spot_chosen_by_o(board)
 		# p testing
 
-		assert_equal([3, 4, 6, 7, 8, 9], testing)
+		assert_equal([1,5], testing)
 	end
 
-	def test_available_spots3
+	def test_spots_taken_by_x2
 		unbeatable = Unbeatable_ai.new(3,"o")
 		board = Tictac_board.new(3)
-		board.board = {"1"=>1,"2"=>2,"3"=>"o","4"=>4,"5"=>"o","6"=>"x","7"=>7,"8"=>"x","9"=>9}
-		testing = unbeatable.moves_available(board)
+		board.board = {"1"=>"o","2"=>2,"3"=>"o","4"=>4,"5"=>"o","6"=>"o","7"=>7,"8"=>"x","9"=>9}
+		testing = unbeatable.spot_chosen_by_o(board)
 		# p testing
 
-		assert_equal([1, 2, 4, 7, 9], testing)
+		assert_equal([1, 3, 5, 6], testing)
 	end
 
-	def test_chosen_spot
+	def test_spots_taken_by_x3
 		unbeatable = Unbeatable_ai.new(3,"o")
 		board = Tictac_board.new(3)
-		player = TicTac_player.new
-		player2 = player.change_icon
-		board.board = {"1"=>1,"2"=>2,"3"=>"o","4"=>4,"5"=>"o","6"=>"x","7"=>7,"8"=>"x","9"=>9}
-		testing = unbeatable.spot_chosen(board,player)
+		board.board = {"1"=>1,"2"=>"o","3"=>"o","4"=>4,"5"=>"o","6"=>"o","7"=>7,"8"=>"x","9"=>"o"}
+		testing = unbeatable.spot_chosen_by_o(board)
 		# p testing
 
-		assert_equal([6,8], testing)
-	end
-
-	def test_chosen_spot2
-		unbeatable = Unbeatable_ai.new(3,"x")
-		board = Tictac_board.new(3)
-		player = TicTac_player.new
-		board.board = {"1"=>1,"2"=>2,"3"=>"o","4"=>4,"5"=>"o","6"=>"x","7"=>7,"8"=>"x","9"=>9}
-		testing = unbeatable.spot_chosen(board,player)
-		# p testing
-
-		assert_equal([3,5], testing)
-	end
-
-	def test_copy_of_board
-		unbeatable = Unbeatable_ai.new(3,"x")
-		board = Tictac_board.new(3)
-		player = TicTac_player.new
-		testing = unbeatable.board_copy(board)
-		p testing
-
-		assert_equal({"1"=>1, "2"=>2, "3"=>3, "4"=>4, "5"=>5, "6"=>6, "7"=>7, "8"=>8, "9"=>9}, testing)
-	end
-
-	def test_the_winning_move
-		unbeatable = Unbeatable_ai.new(3,"x")
-		board = Tictac_board.new(3)
-		board.board = {"1"=>1,"2"=>2,"3"=>"o","4"=>4,"5"=>"o","6"=>"x","7"=>7,"8"=>"x","9"=>"x"}
-		player = TicTac_player.new
-		testing = unbeatable.test_winning_move(board, player.player, 7)
-
-		assert_equal([[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]], testing)
-	end
-
-	def test_ai_move
-		unbeatable = Unbeatable_ai.new(3,"x")
-		board = Tictac_board.new(3)
-		board.board = {"1"=>1,"2"=>2,"3"=>3,"4"=>4,"5"=>5,"6"=>6,"7"=>7,"8"=>8,"9"=>9}
-		player = TicTac_player.new
-		testing = unbeatable.getComputerMove(board, 5)
-
-		assert_equal([[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]], testing)
+		assert_equal([2, 3, 5, 6, 9], testing)
 	end
 
 
