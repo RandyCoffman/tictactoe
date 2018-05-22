@@ -141,4 +141,24 @@ class Tictac_unbeatable_ai_test < Minitest::Test
 		assert_equal("41", testing)
 	end
 
+	def test_side
+		unbeatable = Unbeatable_ai.new(3,"o")
+		board = Tictac_board.new(3)
+		testing = unbeatable.side_position(board)
+		# p testing
+
+		assert_equal([2,4,6,8], testing)
+	end
+
+	def test_side2
+		unbeatable = Unbeatable_ai.new(5,"o")
+		board = Tictac_board.new(5)
+		testing = unbeatable.side_position(board)
+		# p testing
+
+		assert_equal([2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 17, 18, 19, 20, 22, 23, 24], testing)
+		# [2,3,4,6,10,11,15,16,20,22,23,24]
+	end
+
+
 end

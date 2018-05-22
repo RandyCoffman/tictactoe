@@ -8,8 +8,13 @@ class Unbeatable_ai
     end
 
 	def choice(board_class,player)
-
-# not putting anything in here until I get all my rules laid out and can figure out how it can make choices based on the rules
+		move = corner_position(board_class)
+		p spot_chosen_by_x(board_class)
+		if spot_chosen_by_x(board_class)[0] == middle_position(board_class).to_i
+			p move.sample
+			move.sample
+		end
+# not putting anything in here officially until I get all my rules laid out and can figure out how it can make choices based on the rules
 	end
 
 # identifies the spots that are filled with the marker "x"
@@ -55,6 +60,18 @@ class Unbeatable_ai
 		}
 		middle = (middle_array.length/2) + 1
 		middle.to_s
+	end
+
+	def side_position(board_class)
+		board = board_class.board
+		side_array = []
+		board.each_pair { |key,value|
+			side_array.push(key.to_i)
+
+		}
+		side_array = side_array - corner_position(board_class)
+		side_array.delete(middle_position(board_class).to_i)
+		side_array
 	end
 
 end
