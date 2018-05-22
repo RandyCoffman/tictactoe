@@ -81,6 +81,18 @@ class Tictac_unbeatable_ai_test < Minitest::Test
 
 		assert_equal([[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]], testing)
 	end
+
+	def test_ai_move
+		unbeatable = Unbeatable_ai.new(3,"x")
+		board = Tictac_board.new(3)
+		board.board = {"1"=>1,"2"=>2,"3"=>3,"4"=>4,"5"=>5,"6"=>6,"7"=>7,"8"=>8,"9"=>9}
+		player = TicTac_player.new
+		testing = unbeatable.getComputerMove(board, 5)
+
+		assert_equal([[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]], testing)
+	end
+
+
 	123
 	456
 	789

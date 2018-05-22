@@ -23,7 +23,6 @@ def console_game()
 # Ai movement
            choice = player_array[(player_counter % 2)].choice(game_board,player)
         end
-        game_board.update_board_with_position(player.player,choice)
         if game_board.winner_or_loser?()
             outcome = "Player #{player.player} wins!"
         elsif game_board.board_full? == false
