@@ -8,12 +8,7 @@ class Unbeatable_ai
     end
 
 	def choice(board_class,player)
-		move = corner_position(board_class)
-		p spot_chosen_by_x(board_class)
-		if spot_chosen_by_x(board_class)[0] == middle_position(board_class).to_i
-			p move.sample
-			move.sample
-		end
+		take_corner_spot_if_middle_is_chosen(board_class,player)
 # not putting anything in here officially until I get all my rules laid out and can figure out how it can make choices based on the rules
 	end
 
@@ -64,14 +59,41 @@ class Unbeatable_ai
 
 	def side_position(board_class)
 		board = board_class.board
-		side_array = []
-		board.each_pair { |key,value|
-			side_array.push(key.to_i)
-
-		}
+		side_array = *(1..@size)
+		counter = 1
+		@size.times do
+			side_array << ((@size * counter))
+			side_array << ((@size * counter) + 1)
+			counter = counter + 1
+		end
+		side_array << (@size*(@size-1)..(@size**2)).to_a
+		side_array.flatten!
+		side_array.uniq!
+		side_array.delete_if { |x| x > @size**2}
 		side_array = side_array - corner_position(board_class)
-		side_array.delete(middle_position(board_class).to_i)
 		side_array
+	end
+
+	def take_corner_spot_if_middle_is_chosen(board_class,player)
+		if player.player == "o"
+			if spot_chosen_by_x(board_class).last == middle_position(board_class).to_i
+				move = corner_position(board_class)
+				move = move.sample
+				while board_class.valid_position?(move) == false
+       				take_corner_spot_if_middle_is_chosen(board_class,player)
+       			end
+       			move
+			end
+		elsif player.player == "x" 
+			if spot_chosen_by_o(board_class).last == middle_position(board_class).to_i
+				move = corner_position(board_class)
+				move = move.sample
+				while board_class.valid_position?(move) == false
+       				take_corner_spot_if_middle_is_chosen(board_class,player)
+       			end
+       			move
+			end
+		end
 	end
 
 end

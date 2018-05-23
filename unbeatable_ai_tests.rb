@@ -156,9 +156,40 @@ class Tictac_unbeatable_ai_test < Minitest::Test
 		testing = unbeatable.side_position(board)
 		# p testing
 
-		assert_equal([2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 17, 18, 19, 20, 22, 23, 24], testing)
-		# [2,3,4,6,10,11,15,16,20,22,23,24]
+		assert_equal([2,3,4,6,10,11,15,16,20,22,23,24], testing)
 	end
 
+	def test_side3
+		unbeatable = Unbeatable_ai.new(9,"o")
+		board = Tictac_board.new(9)
+		testing = unbeatable.side_position(board)
+		# p testing
+
+		assert_equal([2,3,4,5,6,7,8,10,18,19,27,28,36,37,45,46,54,55,63,64,72,74,75,76,77,78,79,80], testing)
+	end
+
+	def test_taking_corner
+		unbeatable = Unbeatable_ai.new(3,"x")
+		board = Tictac_board.new(3)
+		player = TicTac_player.new
+		board.board = {"1"=>1,"2"=>2,"3"=>3,"4"=>4,"5"=>"o","6"=>6,"7"=>7,"8"=>8,"9"=>9}
+		testing = unbeatable.choice(board,player)
+		board.update_board_with_position(player.player,testing)
+		p "#{testing} this is the corner for test_taking_corner."
+
+		assert_equal({"1"=>1, "2"=>2, "3"=>3, "4"=>4, "5"=>"o", "6"=>6, "7"=>"x", "8"=>8, "9"=>9}, board.board)
+	end
+
+	def test_taking_corner2
+		unbeatable = Unbeatable_ai.new(5,"x")
+		board = Tictac_board.new(5)
+		player = TicTac_player.new
+		board.update_board_with_position("o",13)
+		testing = unbeatable.choice(board,player)
+		board.update_board_with_position(player.player,testing)
+		p "#{testing} this is the corner for test_taking_corner2. 5x5 board"
+
+		assert_equal({"1"=>1, "2"=>2, "3"=>3, "4"=>4, "5"=>"x", "6"=>6, "7"=>7, "8"=>8, "9"=>9, "10"=>10, "11"=>11, "12"=>12, "13"=>"o", "14"=>14, "15"=>15, "16"=>16, "17"=>17, "18"=>18, "19"=>19, "20"=>20, "21"=>21, "22"=>22, "23"=>23, "24"=>24, "25"=>25}, board.board)
+	end
 
 end
