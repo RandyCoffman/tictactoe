@@ -300,4 +300,33 @@ class Tictac_unbeatable_ai_test < Minitest::Test
 		testing = unbeatable.take_win_if_available_player_o(board)
 		assert_equal(9,testing)
 	end
+
+	def test_block_win
+		unbeatable = Unbeatable_ai.new(3,"o")
+		board = Tictac_board.new(3)
+		player = TicTac_player.new
+		player.change_icon
+		board.board = {"1"=>"x","2"=>2,"3"=>3,"4"=>4,"5"=>"x","6"=>6,"7"=>7,"8"=>8,"9"=>9}
+		testing = unbeatable.block_win(board,player)
+		assert_equal(9,testing)
+	end
+
+	def test_block_win2
+		unbeatable = Unbeatable_ai.new(3,"x")
+		board = Tictac_board.new(3)
+		player = TicTac_player.new
+		board.board = {"1"=>"o","2"=>"o","3"=>3,"4"=>4,"5"=>5,"6"=>6,"7"=>7,"8"=>8,"9"=>9}
+		testing = unbeatable.block_win(board,player)
+		assert_equal(3,testing)
+	end
+
+	def test_block_win3
+		unbeatable = Unbeatable_ai.new(3,"o")
+		board = Tictac_board.new(3)
+		player = TicTac_player.new
+		player.change_icon
+		board.board = {"1"=>1,"2"=>2,"3"=>3,"4"=>4,"5"=>5,"6"=>6,"7"=>"x","8"=>8,"9"=>"x"}
+		testing = unbeatable.block_win(board,player)
+		assert_equal(8,testing)
+	end
 end

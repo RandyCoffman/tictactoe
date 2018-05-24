@@ -129,7 +129,7 @@ class Unbeatable_ai
 		@x_win.join.to_i
 	end
 
-		def take_win_if_available_player_o(board_class)
+	def take_win_if_available_player_o(board_class)
 		board_class.win.each { |each_element|
 			o_matches = each_element & spot_chosen_by_o(board_class)
 			if o_matches.count == @size - 1
@@ -137,5 +137,13 @@ class Unbeatable_ai
 			end
 		}
 		@o_win.join.to_i
+	end
+
+	def block_win(board_class,player)
+		if player.player == "x"	
+			take_win_if_available_player_o(board_class)
+		elsif player.player == "o"
+			take_win_if_available_player_x(board_class)
+		end
 	end
 end
