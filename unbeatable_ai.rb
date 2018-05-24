@@ -98,7 +98,7 @@ class Unbeatable_ai
 		end
 	end
 
-	def take_opposite_corner(board_class,player)
+	def take_opposite_corner(board_class)
 		if corner_position(board_class).include?(spot_chosen_by_x(board_class).last) == true
 			move = spot_chosen_by_x(board_class).last
 			corner_hash = {1 => 9, 3 => 7, 7 => 3, 9 =>1}

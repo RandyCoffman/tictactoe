@@ -197,7 +197,7 @@ class Tictac_unbeatable_ai_test < Minitest::Test
 		board = Tictac_board.new(3)
 		player = TicTac_player.new
 		board.board = {"1"=>"x","2"=>2,"3"=>3,"4"=>4,"5"=>5,"6"=>6,"7"=>7,"8"=>8,"9"=>9}
-		testing = unbeatable.take_opposite_corner(board,player.player)
+		testing = unbeatable.take_opposite_corner(board)
 		board.update_board_with_position(player.change_icon,testing)
 		p board.board
 		p "testing board for taking opposite corners"
@@ -209,7 +209,7 @@ class Tictac_unbeatable_ai_test < Minitest::Test
 		board = Tictac_board.new(3)
 		player = TicTac_player.new
 		board.board = {"1"=>1,"2"=>2,"3"=>"o","4"=>4,"5"=>5,"6"=>6,"7"=>7,"8"=>8,"9"=>9}
-		testing = unbeatable.take_opposite_corner(board,player.change_icon)
+		testing = unbeatable.take_opposite_corner(board)
 		board.update_board_with_position(player.player,testing)
 		p board.board
 		p "testing board for taking opposite corners2"
