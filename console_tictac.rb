@@ -146,4 +146,4 @@ def how_many_human_players()
     end
 end
 
-# console_game()
+console_game()
