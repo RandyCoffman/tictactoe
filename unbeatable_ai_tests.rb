@@ -173,9 +173,9 @@ class Tictac_unbeatable_ai_test < Minitest::Test
 		board = Tictac_board.new(3)
 		player = TicTac_player.new
 		board.board = {"1"=>1,"2"=>2,"3"=>3,"4"=>4,"5"=>"o","6"=>6,"7"=>7,"8"=>8,"9"=>9}
-		testing = unbeatable.choice(board,player)
+		testing = unbeatable.take_corner_spot_if_middle_is_chosen(board,player)
 		board.update_board_with_position(player.player,testing)
-		p "#{testing} this is the corner for test_taking_corner."
+		p "#{testing} this is the corner for test_taking_corner. 3x3 board. random corner taking, so may fail sometimes"
 
 		assert_equal({"1"=>1, "2"=>2, "3"=>3, "4"=>4, "5"=>"o", "6"=>6, "7"=>"x", "8"=>8, "9"=>9}, board.board)
 	end
@@ -185,11 +185,35 @@ class Tictac_unbeatable_ai_test < Minitest::Test
 		board = Tictac_board.new(5)
 		player = TicTac_player.new
 		board.update_board_with_position("o",13)
-		testing = unbeatable.choice(board,player)
+		testing = unbeatable.take_corner_spot_if_middle_is_chosen(board,player)
 		board.update_board_with_position(player.player,testing)
-		p "#{testing} this is the corner for test_taking_corner2. 5x5 board"
+		p "#{testing} this is the corner for test_taking_corner2. 5x5 board. random corner taking, so may fail sometimes"
 
 		assert_equal({"1"=>1, "2"=>2, "3"=>3, "4"=>4, "5"=>"x", "6"=>6, "7"=>7, "8"=>8, "9"=>9, "10"=>10, "11"=>11, "12"=>12, "13"=>"o", "14"=>14, "15"=>15, "16"=>16, "17"=>17, "18"=>18, "19"=>19, "20"=>20, "21"=>21, "22"=>22, "23"=>23, "24"=>24, "25"=>25}, board.board)
+	end
+
+	def test_taking_opposite_corner
+		unbeatable = Unbeatable_ai.new(3,"o")
+		board = Tictac_board.new(3)
+		player = TicTac_player.new
+		board.board = {"1"=>"x","2"=>2,"3"=>3,"4"=>4,"5"=>5,"6"=>6,"7"=>7,"8"=>8,"9"=>9}
+		testing = unbeatable.take_opposite_corner(board,player.player)
+		board.update_board_with_position(player.change_icon,testing)
+		p board.board
+		p "testing board for taking opposite corners"
+		assert_equal(9,testing)
+	end
+
+	def test_taking_opposite_corner2
+		unbeatable = Unbeatable_ai.new(3,"x")
+		board = Tictac_board.new(3)
+		player = TicTac_player.new
+		board.board = {"1"=>1,"2"=>2,"3"=>"o","4"=>4,"5"=>5,"6"=>6,"7"=>7,"8"=>8,"9"=>9}
+		testing = unbeatable.take_opposite_corner(board,player.change_icon)
+		board.update_board_with_position(player.player,testing)
+		p board.board
+		p "testing board for taking opposite corners2"
+		assert_equal(7,testing)
 	end
 
 end
