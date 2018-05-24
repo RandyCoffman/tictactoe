@@ -244,4 +244,60 @@ class Tictac_unbeatable_ai_test < Minitest::Test
 		assert_equal(25,testing)
 	end
 
+	def test_taking_winning_spot_x
+		unbeatable = Unbeatable_ai.new(3,"x")
+		board = Tictac_board.new(3)
+		player = TicTac_player.new
+		board.board = {"1"=>"x","2"=>"x","3"=>3,"4"=>4,"5"=>5,"6"=>6,"7"=>7,"8"=>8,"9"=>9}
+		testing = unbeatable.take_win_if_available_player_x(board)
+		p "winning spot 3"
+		assert_equal(3,testing)
+	end
+
+	def test_taking_winning_spot_x2
+		unbeatable = Unbeatable_ai.new(3,"x")
+		board = Tictac_board.new(3)
+		player = TicTac_player.new
+		board.board = {"1"=>"x","2"=>2,"3"=>3,"4"=>"x","5"=>5,"6"=>6,"7"=>7,"8"=>8,"9"=>9}
+		testing = unbeatable.take_win_if_available_player_x(board)
+		p "winning spot 7"
+		assert_equal(7,testing)
+	end
+
+	def test_taking_winning_spot_x3
+		unbeatable = Unbeatable_ai.new(3,"x")
+		board = Tictac_board.new(3)
+		player = TicTac_player.new
+		board.board = {"1"=>"x","2"=>2,"3"=>3,"4"=>4,"5"=>"x","6"=>6,"7"=>7,"8"=>8,"9"=>9}
+		testing = unbeatable.take_win_if_available_player_x(board)
+		p "winning spot 9"
+		assert_equal(9,testing)
+	end
+
+	def test_taking_winning_spot_o
+		unbeatable = Unbeatable_ai.new(3,"o")
+		board = Tictac_board.new(3)
+		player = TicTac_player.new
+		board.board = {"1"=>"o","2"=>"o","3"=>3,"4"=>4,"5"=>5,"6"=>6,"7"=>7,"8"=>8,"9"=>9}
+		testing = unbeatable.take_win_if_available_player_o(board)
+		assert_equal(3,testing)
+	end
+
+	def test_taking_winning_spot_o2
+		unbeatable = Unbeatable_ai.new(3,"o")
+		board = Tictac_board.new(3)
+		player = TicTac_player.new
+		board.board = {"1"=>"o","2"=>2,"3"=>3,"4"=>"o","5"=>5,"6"=>6,"7"=>7,"8"=>8,"9"=>9}
+		testing = unbeatable.take_win_if_available_player_o(board)
+		assert_equal(7,testing)
+	end
+
+	def test_taking_winning_spot_o3
+		unbeatable = Unbeatable_ai.new(3,"o")
+		board = Tictac_board.new(3)
+		player = TicTac_player.new
+		board.board = {"1"=>"o","2"=>2,"3"=>3,"4"=>4,"5"=>"o","6"=>6,"7"=>7,"8"=>8,"9"=>9}
+		testing = unbeatable.take_win_if_available_player_o(board)
+		assert_equal(9,testing)
+	end
 end

@@ -10,7 +10,8 @@ class Unbeatable_ai
 	def choice(board_class,player)
 		# take_corner_spot_if_middle_is_chosen(board_class,player)
 		# take_opposite_corner(board_class,player)
-		take_middle_if_first(board_class)
+		# take_middle_if_first(board_class)
+		take_win_if_available_player_x(board_class)
 # not putting anything in here officially until I get all my rules laid out and can figure out how it can make choices based on the rules
 	end
 
@@ -118,4 +119,25 @@ class Unbeatable_ai
 		end
 	end
 
+	def take_win_if_available_player_x(board_class)
+		board_class.win.each { |each_element|
+			x_matches = each_element & spot_chosen_by_x(board_class)
+			if x_matches.count == @size - 1
+				@x_win = each_element - x_matches
+				@x_win.join.to_i
+			end
+		}
+		@x_win.join.to_i
+	end
+
+		def take_win_if_available_player_o(board_class)
+		board_class.win.each { |each_element|
+			o_matches = each_element & spot_chosen_by_o(board_class)
+			if o_matches.count == @size - 1
+				@o_win = each_element - o_matches
+				@o_win.join.to_i
+			end
+		}
+		@o_win.join.to_i
+	end
 end
