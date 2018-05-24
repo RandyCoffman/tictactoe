@@ -216,4 +216,32 @@ class Tictac_unbeatable_ai_test < Minitest::Test
 		assert_equal(7,testing)
 	end
 
+	def test_taking_middle_first
+		unbeatable = Unbeatable_ai.new(3,"x")
+		board = Tictac_board.new(3)
+		player = TicTac_player.new
+		board.board = {"1"=>1,"2"=>2,"3"=>3,"4"=>4,"5"=>5,"6"=>6,"7"=>7,"8"=>8,"9"=>9}
+		testing = unbeatable.take_middle_if_first(board)
+		board.update_board_with_position(player.player,testing)
+		assert_equal(5,testing)
+	end
+
+	def test_taking_middle_first2
+		unbeatable = Unbeatable_ai.new(5,"x")
+		board = Tictac_board.new(5)
+		player = TicTac_player.new
+		testing = unbeatable.take_middle_if_first(board)
+		board.update_board_with_position(player.player,testing)
+		assert_equal(13,testing)
+	end
+
+	def test_taking_middle_first3
+		unbeatable = Unbeatable_ai.new(7,"x")
+		board = Tictac_board.new(7)
+		player = TicTac_player.new
+		testing = unbeatable.take_middle_if_first(board)
+		board.update_board_with_position(player.player,testing)
+		assert_equal(25,testing)
+	end
+
 end
