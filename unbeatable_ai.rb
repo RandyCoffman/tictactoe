@@ -124,7 +124,6 @@ class Unbeatable_ai
 			x_matches = each_element & spot_chosen_by_x(board_class)
 			if x_matches.count == @size - 1
 				@x_win = each_element - x_matches
-				@x_win.join.to_i
 			end
 		}
 		@x_win.join.to_i
@@ -135,7 +134,6 @@ class Unbeatable_ai
 			o_matches = each_element & spot_chosen_by_o(board_class)
 			if o_matches.count == @size - 1
 				@o_win = each_element - o_matches
-				@o_win.join.to_i
 			end
 		}
 		@o_win.join.to_i
