@@ -8,12 +8,25 @@ class Unbeatable_ai
     end
 
 	def choice(board_class,player)
-		# take_corner_spot_if_middle_is_chosen(board_class,player)
-		# take_opposite_corner(board_class,player)
-		# take_middle_if_first(board_class)
-		# take_win_if_available_player_x(board_class)
-		create_fork_for_x(board_class)
-# not putting anything in here officially until I get all my rules laid out and can figure out how it can make choices based on the rules
+		if take_win(board_class,player).class == Integer 
+			return take_win(board_class,player)
+		elsif block_win(board_class,player).class == Integer
+			return block_win(board_class,player)
+		elsif create_forks(board_class,player).class == Integer
+			return create_forks(board_class,player)
+		elsif block_fork(board_class,player).class == Integer
+			return block_fork(board_class,player)
+		elsif take_middle_if_first(board_class,player).class == Integer
+			return take_middle_if_first(board_class,player)
+		elsif take_corner_spot_if_middle_is_chosen(board_class,player).class == Integer
+			return take_corner_spot_if_middle_is_chosen(board_class,player)
+		elsif take_opposite_corner(board_class).class == Integer
+			return take_opposite_corner(board_class)
+		elsif side_position(board_class).class == Integer
+			return side_position(board_class)
+		else
+			return random(board_class,player)
+		end
 	end
 
 # identifies the spots that are filled with the marker "x"
@@ -63,19 +76,17 @@ class Unbeatable_ai
 
 	def side_position(board_class)
 		board = board_class.board
-		side_array = *(1..@size)
-		counter = 1
-		@size.times do
-			side_array << ((@size * counter))
-			side_array << ((@size * counter) + 1)
-			counter = counter + 1
-		end
-		side_array << (@size*(@size-1)..(@size**2)).to_a
-		side_array.flatten!
-		side_array.uniq!
-		side_array.delete_if { |x| x > @size**2}
+		side_array = []
+		board.each_pair { |key,value|
+			side_array.push(key.to_i)
+
+		}
 		side_array = side_array - corner_position(board_class)
-		side_array
+		side_array.delete(middle_position(board_class).to_i)
+		side = side_array.sample
+		until board_class.valid_position?(side)
+			side_position(board_class)
+		end
 	end
 
 	def take_corner_spot_if_middle_is_chosen(board_class,player)
@@ -86,7 +97,7 @@ class Unbeatable_ai
 				while board_class.valid_position?(move) == false
        				take_corner_spot_if_middle_is_chosen(board_class,player)
        			end
-       			move
+       			return move.to_i
 			end
 		elsif player.player == "x" 
 			if spot_chosen_by_o(board_class).last == middle_position(board_class).to_i
@@ -95,7 +106,7 @@ class Unbeatable_ai
 				while board_class.valid_position?(move) == false
        				take_corner_spot_if_middle_is_chosen(board_class,player)
        			end
-       			move
+       			return move.to_i
 			end
 		end
 	end
@@ -112,11 +123,23 @@ class Unbeatable_ai
 		end
 	end
 
-	def take_middle_if_first(board_class)
+	def take_middle_if_first_x(board_class,player)
+		if spot_chosen_by_o(board_class).empty? == true
+			middle_position(board_class).to_i
+		end
+	end
+
+	def take_middle_if_first_o(board_class,player)
 		if spot_chosen_by_x(board_class).empty? == true
 			middle_position(board_class).to_i
-		elsif spot_chosen_by_o(board_class).empty? == true
-			middle_position(board_class).to_i
+		end
+	end
+
+	def take_middle_if_first(board_class,player)
+		if player.player == "x"
+			take_middle_if_first_x(board_class,player)
+		elsif player.player == "o"
+			take_middle_if_first_o(board_class,player)
 		end
 	end
 
@@ -214,5 +237,16 @@ class Unbeatable_ai
 			create_fork_for_o(board_class)
 		end
 	end
+
+    def random(board_class,player)
+        board = board_class.board
+       	move = rand(1..@size**2)
+       	if board_class.valid_position?(move) == false
+       		random(board_class,player)
+       	else
+       		move
+       	end
+
+    end
 
 end
