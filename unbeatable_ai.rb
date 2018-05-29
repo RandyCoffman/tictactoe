@@ -11,7 +11,8 @@ class Unbeatable_ai
 		# take_corner_spot_if_middle_is_chosen(board_class,player)
 		# take_opposite_corner(board_class,player)
 		# take_middle_if_first(board_class)
-		take_win_if_available_player_x(board_class)
+		# take_win_if_available_player_x(board_class)
+		create_fork_for_x(board_class)
 # not putting anything in here officially until I get all my rules laid out and can figure out how it can make choices based on the rules
 	end
 
@@ -125,10 +126,12 @@ class Unbeatable_ai
 			if x_matches.count == @size - 1
 				x_win = each_element - x_matches
 				if board_class.valid_position?(x_win.join.to_i) == true
+					p x_win.join.to_i
 					return x_win.join.to_i
 				end
 			end
 		end
+		"no win"
 	end
 
 	def take_win_if_available_player_o(board_class)
@@ -141,6 +144,15 @@ class Unbeatable_ai
 				end
 			end
 		end
+		"no win"
+	end
+
+	def take_win(board_class,player)
+		if player.player == "x"	
+			take_win_if_available_player_x(board_class)
+		elsif player.player == "o"
+			take_win_if_available_player_o(board_class)
+		end
 	end
 
 	def block_win(board_class,player)
@@ -150,4 +162,57 @@ class Unbeatable_ai
 			take_win_if_available_player_x(board_class)
 		end
 	end
+
+	def create_fork_for_x(board_class)
+		fork_array = []
+		for each_element in board_class.win
+			x_matches = each_element & spot_chosen_by_x(board_class)
+			x_fork = each_element - x_matches
+			if x_fork.count == @size - 1
+			fork_array << x_fork
+			fork_array.each { |fork|
+				real_fork = fork & x_fork
+				if real_fork.count == 1 && board_class.valid_position?(real_fork.join.to_i)
+					return real_fork.join.to_i
+				end
+			}
+			end
+		end
+		"no fork"
+	end
+
+	def create_fork_for_o(board_class)
+		fork_array = []
+		for each_element in board_class.win
+			o_matches = each_element & spot_chosen_by_o(board_class)
+			o_fork = each_element - o_matches
+			if o_fork.count == @size - 1
+			fork_array << o_fork
+			fork_array.each { |fork|
+				real_fork = fork & o_fork
+				if real_fork.count == 1 && board_class.valid_position?(real_fork.join.to_i)
+					return real_fork.join.to_i
+				end
+			}
+			end
+		end
+		"no fork"
+	end
+
+	def create_forks(board_class,player)
+		if player.player == "x"
+			create_fork_for_x(board_class)
+		elsif player.player == "o"
+			create_fork_for_o(board_class)
+		end
+	end
+
+	def block_fork(board_class,player)
+		if player.player == "o"
+			create_fork_for_x(board_class)
+		elsif player.player == "x"
+			create_fork_for_o(board_class)
+		end
+	end
+
 end
