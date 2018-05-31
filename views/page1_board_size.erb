@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>Welcome To My Tic-Tac-Toe Game!</title>
+	<script type="text/javascript" src="validation_event.js"></script>
 </head>
 <body>
 	<h1>Welcome To My Tic-Tac-Toe Game!</h1>
@@ -13,7 +14,7 @@
 
 	<form method="post" action="post-size"> 
 		<div>
-			<input type="text" name="size" placeholder="Size" maxlength="1" pattern="^\d*[3579]$">
+			<input type="text" name="size" placeholder="Size" maxlength="1" pattern="^\d*[3579]$" required>
 		</div>
 		<br>
 		<div>
