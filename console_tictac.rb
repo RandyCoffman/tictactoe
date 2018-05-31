@@ -114,7 +114,7 @@ end
 def board_size()
     p "What board size would you want? odd numbers besides 1 are valid choices; 3 is a normal 3 by 3 board and 5 would make a 5 by 5 board."
     choice = gets.chomp
-    if choice.to_i.odd? == true && choice.to_i > 1 && choice.to_i < 6
+    if choice.to_i.odd? == true && choice.to_i > 1 && choice.to_i < 10
         choice.to_i
     else
     	p "wrong size choice"
