@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Selection Screen</title>
+	<script src="/js/show_or_hide_hidden_div.js">
+	</script>
+</head>
+<body>
+	<h1>Select your game mode.</h1>
+	<form method="post" action="post-player-selection" onsubmit="check_radio()"> 
+		<div>
+			<input type="radio" value="0" name="players" id="radio" onclick="hide_hidden_div();" required>Ai vs ai <br>
+			<input type="radio" value="1" name="players" id="radio" onclick="show_hidden_div();">Player vs ai <br>
+			<input type="radio" value="2" name="players" id="radio" onclick="hide_hidden_div();">Player vs player
+		</div>
+		<br>
+		<div id="hidden_div" class="hide">
+			<p>Would you like to go first?</p>
+			<input type="radio" value="x" name="p1_marker" id="hidden_radio">Yes <br>
+			<input type="radio" value="o" name="p1_marker">No
+		</div>
+		<br>
+		<div>
+			<input type="submit" onclick="check_radio();">
+		</div>
+	</form>
+</body>
+</html>
