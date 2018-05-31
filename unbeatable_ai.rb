@@ -88,7 +88,7 @@ class Unbeatable_ai
 	side_array.uniq!
 	side_array.delete_if { |x| x > @size**2}
  		side_array = side_array - corner_position(board_class)
- 		p side_array
+ 		side_array
  		return side_array
 	end
 
