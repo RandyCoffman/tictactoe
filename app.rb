@@ -8,5 +8,6 @@ end
 
 post "/post-size" do
 	session[:size] = params[:size]
-	p session[:size]
+	@size = session[:size]
+	p @size
 end
