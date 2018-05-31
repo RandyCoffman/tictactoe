@@ -6,13 +6,13 @@
 <body>
 	<h1>Welcome To My Tic-Tac-Toe Game!</h1>
 
-	<h2>Please enter a single digit odd number to create the board size.</h2>
+	<h2>Please enter a single digit odd number(3,5,7,9) to create the board size.</h2>
 
 	<h3>The number will then create a 3x3, 5x5, 7x7, or 9x9 board depending on your choice.</h3>
 
 	<form method="post" action="post-size"> 
 		<div>
-			<input type="text" name="size" placeholder="Size" value="">
+			<input type="text" name="size" placeholder="Size" maxlength="1" pattern="^\d*[3579]$">
 		</div>
 		<br>
 		<div>
