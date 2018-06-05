@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Difficulty Selection</title>
+	<script src="/js/show_or_hide_hidden_div.js"></script>
+</head>
+<body>
+	<h1>Select the difficulty of the ai.</h1>
+	<form method="post" action="post-start-game"> 
+		<div id="radio">
+			<input type="radio" value="1" name="difficulty1" id="radio" required><span>Random</span>
+			<input type="radio" value="2" name="difficulty1" id="radio"><span>Sequential</span>
+			<input type="radio" value="3" name="difficulty1" id="radio"><span>Unbeatable</span>
+		</div>
+		<br>
+		<div id='hidden_div' class="hide" id="radio">
+			<p>The other ai's difficulty</p>
+			<input type="radio" value="1" name="difficulty2" id="hidden_radio"><span>Random</span>
+			<input type="radio" value="2" name="difficulty2"><span>Sequential</span>
+			<input type="radio" value="3" name="difficulty2" id="radio"><span>Unbeatable</span>
+		</div>
+		<br>
+		<div>
+			<input type="submit">
+		</div>
+	</form>
+
+	<script>
+		var num = <%= players.to_json %>;
+		console.log(typeof num)
+		console.log(num)
+		if(num === "0"){
+			show_hidden_div()
+		}
+	</script>
+
+</body>
+</html>
