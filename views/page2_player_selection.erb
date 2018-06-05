@@ -7,21 +7,21 @@
 </head>
 <body>
 	<h1>Select your game mode.</h1>
-	<form method="post" action="post-player-selection" onsubmit="check_radio()"> 
-		<div>
-			<input type="radio" value="0" name="players" id="radio" onclick="hide_hidden_div();" required>Ai vs ai <br>
-			<input type="radio" value="1" name="players" id="radio" onclick="show_hidden_div();">Player vs ai <br>
-			<input type="radio" value="2" name="players" id="radio" onclick="hide_hidden_div();">Player vs player
+	<form method="post" action="post-player-selection"> 
+		<div id="radio">
+			<input type="radio" value="0" name="players" id="radio" onclick="hide_hidden_div();" required><span>Ai vs ai</span>
+			<input type="radio" value="1" name="players" id="radio" onclick="show_hidden_div();"><span>Player vs ai</span>
+			<input type="radio" value="2" name="players" id="radio" onclick="hide_hidden_div();"><span>Player vs player</span>
 		</div>
 		<br>
-		<div id="hidden_div" class="hide">
+		<div id="hidden_div" class="hide"  id="radio">
 			<p>Would you like to go first?</p>
-			<input type="radio" value="x" name="p1_marker" id="hidden_radio">Yes <br>
-			<input type="radio" value="o" name="p1_marker">No
+			<input type="radio" value="x" name="p1_marker" id="hidden_radio"><span>Yes</span>
+			<input type="radio" value="o" name="p1_marker"><span>No</span>
 		</div>
 		<br>
 		<div>
-			<input type="submit" onclick="check_radio();">
+			<input type="submit">
 		</div>
 	</form>
 </body>
