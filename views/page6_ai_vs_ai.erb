@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<table>
+	    <tr>
+	        <td><%= game_board.board["1"] %></td>
+	        <td><%= game_board.board["2"] %></td>
+	        <td><%= game_board.board["3"] %></td>
+	    </tr>
+	    <tr>
+	        <td><%= game_board.board["4"] %></td>
+	        <td><%= game_board.board["5"] %></td>
+	        <td><%= game_board.board["6"] %></td>
+	    </tr>
+	    <tr>
+	        <td><%= game_board.board["7"] %></td>
+	        <td><%= game_board.board["8"] %></td>
+	        <td><%= game_board.board["9"] %></td>
+	    </tr>
+	</table>
+	<div>
+		<p><%= error %></p>
+	</div>
+	<br>
+	<form method="post" action="post-player-vs-player"> 
+		<div>
+			<input id="move" type="text" name="move" placeholder="Move selection" maxlength="1" pattern="^\d*[123456789]$" required autofocus="">
+		</div>
+		<br>
+		<div>
+			<input type="submit">
+		</div>
+	</form>
+</body>
+</html>
