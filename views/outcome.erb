@@ -4,6 +4,7 @@
 	<title></title>
 </head>
 <body>
+	<h2><%= outcome %></h2>
 	<table>
 	    <tr>
 	        <td><%= game_board.board["1"] %></td>
@@ -21,18 +22,9 @@
 	        <td><%= game_board.board["9"] %></td>
 	    </tr>
 	</table>
-	<div>
-		<p><%= error %></p>
-	</div>
-	<br>
-	<form method="post" action="post_player_vs_ai"> 
-		<div>
-			<input id="move" type="text" name="move" placeholder="Move selection" maxlength="1" pattern="^\d*[123456789]$" required autofocus="">
-		</div>
-		<br>
-		<div>
-			<input type="submit">
-		</div>
-	</form>
+	<br><br>
+	<p>Would you like to try again?</p>
+	<button onclick="window.location.href='/'">Yes</button>
+	<button onclick="window.location.href='http://lmgtfy.com/?q=How+to+get+better+at+tic+tac+toe%3F'">No</button>
 </body>
 </html>
