@@ -73,7 +73,7 @@ class Tictac_unbeatable_ai_test < Minitest::Test
 		unbeatable = Unbeatable_ai.new(3,"o")
 		board = Tictac_board.new(3)
 		testing = unbeatable.corner_position(board)
-		# p testing
+		p testing
 
 		assert_equal([1, 3, 7, 9], testing)
 	end
@@ -199,8 +199,8 @@ class Tictac_unbeatable_ai_test < Minitest::Test
 		board.board = {"1"=>"x","2"=>2,"3"=>3,"4"=>4,"5"=>5,"6"=>6,"7"=>7,"8"=>8,"9"=>9}
 		testing = unbeatable.take_opposite_corner(board)
 		board.update_board_with_position(player.change_icon,testing)
-		p board.board
-		p "testing board for taking opposite corners"
+		# p board.board
+		# p "testing board for taking opposite corners"
 		assert_equal(9,testing)
 	end
 
@@ -211,8 +211,8 @@ class Tictac_unbeatable_ai_test < Minitest::Test
 		board.board = {"1"=>1,"2"=>2,"3"=>"o","4"=>4,"5"=>5,"6"=>6,"7"=>7,"8"=>8,"9"=>9}
 		testing = unbeatable.take_opposite_corner(board)
 		board.update_board_with_position(player.player,testing)
-		p board.board
-		p "testing board for taking opposite corners2"
+		# p board.board
+		# p "testing board for taking opposite corners2"
 		assert_equal(7,testing)
 	end
 
@@ -221,7 +221,7 @@ class Tictac_unbeatable_ai_test < Minitest::Test
 		board = Tictac_board.new(3)
 		player = TicTac_player.new
 		board.board = {"1"=>1,"2"=>2,"3"=>3,"4"=>4,"5"=>5,"6"=>6,"7"=>7,"8"=>8,"9"=>9}
-		testing = unbeatable.take_middle_if_first(board)
+		testing = unbeatable.take_middle_if_first(board,player)
 		board.update_board_with_position(player.player,testing)
 		assert_equal(5,testing)
 	end
@@ -230,7 +230,7 @@ class Tictac_unbeatable_ai_test < Minitest::Test
 		unbeatable = Unbeatable_ai.new(5,"x")
 		board = Tictac_board.new(5)
 		player = TicTac_player.new
-		testing = unbeatable.take_middle_if_first(board)
+		testing = unbeatable.take_middle_if_first(board,player)
 		board.update_board_with_position(player.player,testing)
 		assert_equal(13,testing)
 	end
@@ -239,7 +239,7 @@ class Tictac_unbeatable_ai_test < Minitest::Test
 		unbeatable = Unbeatable_ai.new(7,"x")
 		board = Tictac_board.new(7)
 		player = TicTac_player.new
-		testing = unbeatable.take_middle_if_first(board)
+		testing = unbeatable.take_middle_if_first(board,player)
 		board.update_board_with_position(player.player,testing)
 		assert_equal(25,testing)
 	end
@@ -336,9 +336,9 @@ class Tictac_unbeatable_ai_test < Minitest::Test
 		player = TicTac_player.new
 		player.change_icon
 		p player.player
-		board.board = {"1"=>"o","2"=>"x","3"=>3,"4"=>4,"5"=>"x","6"=>6,"7"=>"o","8"=>8,"9"=>"o"}
+		board.board = {"1"=>"o","2"=>"x","3"=>3,"4"=>4,"5"=>"x","6"=>6,"7"=>"o","8"=>8,"9"=>9}
 		testing = unbeatable.create_forks(board,player)
-		assert_equal(3,testing)
+		assert_equal(9,testing)
 	end
 
 	def test_fork2
@@ -356,6 +356,9 @@ class Tictac_unbeatable_ai_test < Minitest::Test
 		player = TicTac_player.new
 		board.board = {"1"=>"x","2"=>2,"3"=>"o","4"=>4,"5"=>"o","6"=>6,"7"=>7,"8"=>8,"9"=>"x"}
 		testing = unbeatable.create_forks(board,player)
+		# x2o
+		# 4o6
+		# 78x
 		assert_equal(7,testing)
 	end
 

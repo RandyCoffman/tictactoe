@@ -20,6 +20,7 @@ class Tictac_console_test < Minitest::Test
 		counter = 0
 		1000.times do
 			console_game
+			p counter
 			if console_game == "Tie!"
 				counter += 1
 			end

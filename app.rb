@@ -13,7 +13,7 @@ get "/" do
     session[:board] = Tictac_board.new(3)
     session[:player] = TicTac_player.new
     session[:outcome] = ""
-	erb :page1_board_size
+    redirect "/player-selection"
 end
 
 post "/post-size" do

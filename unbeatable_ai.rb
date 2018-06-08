@@ -8,25 +8,18 @@ class Unbeatable_ai
     end
 
 	def choice(board_class,player)
-		if take_win(board_class,player).class == Integer 
-			return take_win(board_class,player)
-		elsif block_win(board_class,player).class == Integer
-			return block_win(board_class,player)
-		elsif create_forks(board_class,player).class == Integer
-			return create_forks(board_class,player)
-		elsif block_fork(board_class,player).class == Integer
-			return block_fork(board_class,player)
-		elsif take_middle_if_first(board_class,player).class == Integer
-			return take_middle_if_first(board_class,player)
-		elsif take_corner_spot_if_middle_is_chosen(board_class,player).class == Integer
-			return take_corner_spot_if_middle_is_chosen(board_class,player)
-		elsif take_opposite_corner(board_class).class == Integer
-			return take_opposite_corner(board_class)
-		elsif side_position(board_class).class == Integer
-			return side_position(board_class)
-		else
-			return random(board_class,player)
-		end
+		choice_array = [take_win(board_class,player), block_win(board_class,player), 
+		create_forks(board_class,player), block_fork(board_class,player),
+		take_middle_if_first(board_class,player), take_corner_spot_if_middle_is_chosen(board_class,player), 
+		take_opposite_corner(board_class), side_position(board_class), random(board_class,player)]
+
+		choice_array.each {|each_element|
+			counter = 0
+			if each_element.is_a? Integer
+				return each_element
+			end
+		}
+
 	end
 
 # identifies the spots that are filled with the marker "x"
@@ -59,9 +52,9 @@ class Unbeatable_ai
 		board.each_pair { |key,value|
 			if key.to_i == 1 || key.to_i == @size || key.to_i == @size * (@size-1) + 1 || key.to_i == @size**2
 				corner_array.push(key.to_i)
-				return corner_array
 			end
 		}
+		return corner_array
 	end
 
 	def middle_position(board_class)
@@ -118,11 +111,11 @@ class Unbeatable_ai
 	def take_opposite_corner(board_class)
 		if corner_position(board_class).include?(spot_chosen_by_x(board_class).last) == true
 			move = spot_chosen_by_x(board_class).last
-			corner_hash = {1 => @size**2, @size => @size*(@size-1), @size*(@size-1) => @size, @size**2 =>1}
+			corner_hash = {1 => @size**2, @size => @size*(@size-1)+1, @size*(@size-1) => @size, @size**2 =>1}
 			corner_hash[move]
 		elsif corner_position(board_class).include?(spot_chosen_by_o(board_class).last) == true
 			move = spot_chosen_by_o(board_class).last
-			corner_hash = {1 => @size**2, @size => @size*(@size-1), @size*(@size-1) => @size, @size**2 =>1}
+			corner_hash = {1 => @size**2, @size => @size*(@size-1)+1, @size*(@size-1) => @size, @size**2 =>1}
 			corner_hash[move]
 		end
 	end
@@ -198,12 +191,11 @@ class Unbeatable_ai
 			fork_array << x_fork
 			fork_array.each { |fork|
 				real_fork = fork & x_fork
-				if real_fork.count == 1 && board_class.valid_position?(real_fork.join.to_i) == true
+				if real_fork.count == 1 && board_class.valid_position?(real_fork.join.to_i)
 					return real_fork.join.to_i
 				end
 			}
 			end
-			"no fork"
 		end
 		"no fork"
 	end
@@ -217,28 +209,27 @@ class Unbeatable_ai
 			fork_array << o_fork
 			fork_array.each { |fork|
 				real_fork = fork & o_fork
-				if real_fork.count == 1 && board_class.valid_position?(real_fork.join.to_i) == true
+				if real_fork.count == 1 && board_class.valid_position?(real_fork.join.to_i)
 					return real_fork.join.to_i
 				end
 			}
 			end
-			"no fork"
 		end
 		"no fork"
 	end
 
 	def create_forks(board_class,player)
-		if player.player == "o"
+		if player.player == "x"
 			create_fork_for_x(board_class)
-		elsif player.player == "x"
+		elsif player.player == "o"
 			create_fork_for_o(board_class)
 		end
 	end
 
 	def block_fork(board_class,player)
-		if player.player == "x"
+		if player.player == "o"
 			create_fork_for_x(board_class)
-		elsif player.player == "o"
+		elsif player.player == "x"
 			create_fork_for_o(board_class)
 		end
 	end
