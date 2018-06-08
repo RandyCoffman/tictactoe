@@ -90,19 +90,21 @@ class Unbeatable_ai
 			if spot_chosen_by_x(board_class).last == middle_position(board_class).to_i
 				move = corner_position(board_class)
 				move = move.sample
-				while board_class.valid_position?(move) == false
+				if board_class.valid_position?(move) == false
        				take_corner_spot_if_middle_is_chosen(board_class,player)
+       			else
+       				return move.to_i
        			end
-       			return move.to_i
 			end
 		elsif player.player == "x" 
 			if spot_chosen_by_o(board_class).last == middle_position(board_class).to_i
 				move = corner_position(board_class)
 				move = move.sample
-				while board_class.valid_position?(move) == false
+				if board_class.valid_position?(move) == false
        				take_corner_spot_if_middle_is_chosen(board_class,player)
+       			else
+       				return move.to_i
        			end
-       			return move.to_i
 			end
 			"no corner"
 		end
@@ -191,7 +193,7 @@ class Unbeatable_ai
 			fork_array << x_fork
 			fork_array.each { |fork|
 				real_fork = fork & x_fork
-				if real_fork.count == 1 && board_class.valid_position?(real_fork.join.to_i)
+				if real_fork.count == 1 && board_class.valid_position?(real_fork.join.to_i) == true
 					return real_fork.join.to_i
 				end
 			}
@@ -209,7 +211,7 @@ class Unbeatable_ai
 			fork_array << o_fork
 			fork_array.each { |fork|
 				real_fork = fork & o_fork
-				if real_fork.count == 1 && board_class.valid_position?(real_fork.join.to_i)
+				if real_fork.count == 1 && board_class.valid_position?(real_fork.join.to_i) == true
 					return real_fork.join.to_i
 				end
 			}
@@ -219,17 +221,17 @@ class Unbeatable_ai
 	end
 
 	def create_forks(board_class,player)
-		if player.player == "x"
+		if player.player == "o"
 			create_fork_for_x(board_class)
-		elsif player.player == "o"
+		elsif player.player == "x"
 			create_fork_for_o(board_class)
 		end
 	end
 
 	def block_fork(board_class,player)
-		if player.player == "o"
+		if player.player == "x"
 			create_fork_for_x(board_class)
-		elsif player.player == "x"
+		elsif player.player == "o"
 			create_fork_for_o(board_class)
 		end
 	end

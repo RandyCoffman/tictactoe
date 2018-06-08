@@ -26,7 +26,7 @@ end
 
 post "/post-player-selection" do
 	session[:players] = params[:players]
-	p session[:players]
+	session[:players]
 	session[:p1_p2] = params[:p1_p2]
 	if session[:p1_p2] == "1"
 		"player is x"
@@ -94,7 +94,7 @@ get "/player_vs_ai" do
 	if p1_p2 == "2" && session[:counter].odd?
 		session[:ai_move] = choose_ai(size=3,player.player,difficulty1).choice(game_board,player)
 		session[:counter] = session[:counter] + 1
-		p session[:ai_move]
+		session[:ai_move]
 		redirect "/post_player_vs_ai"
 	elsif p1_p2 == "1" && session[:counter].even?
 		session[:ai_move] = choose_ai(size=3,player.player,difficulty1).choice(game_board,player)
@@ -154,6 +154,7 @@ get "/ai_vs_ai" do
 end
 
 get "/post_ai_vs_ai" do
+	p session[:ai_move].to_i
 	session[:board].update_board_with_position(session[:player].player,session[:ai_move].to_i)
 	session[:error] = ""
 	if session[:board].winner_or_loser?()
@@ -172,4 +173,12 @@ get "/outcome" do
 	outcome = session[:outcome]
 	game_board = session[:board]
 	erb :outcome, locals:{outcome:outcome,game_board:game_board}
+end
+
+get "/how_to_win" do
+	erb :how_to_win
+end
+
+get "/about" do
+	erb :about
 end
