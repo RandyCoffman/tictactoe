@@ -9,10 +9,6 @@ require_relative "app_functions.rb"
 enable :sessions
 
 get "/" do
-	session[:counter] = 1
-    session[:board] = Tictac_board.new(3)
-    session[:player] = TicTac_player.new
-    session[:outcome] = ""
     redirect "/player-selection"
 end
 
@@ -21,6 +17,10 @@ end
 # end
 
 get "/player-selection" do
+	session[:counter] = 1
+    session[:board] = Tictac_board.new(3)
+    session[:player] = TicTac_player.new
+    session[:outcome] = ""
 	erb :page2_player_selection
 end
 
