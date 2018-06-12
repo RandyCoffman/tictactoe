@@ -28,11 +28,6 @@ post "/post-player-selection" do
 	session[:players] = params[:players]
 	session[:players]
 	session[:p1_p2] = params[:p1_p2]
-	if session[:p1_p2] == "1"
-		"player is x"
-	else 
-		"player is y"
-	end
 	size = session[:size]
 	if session[:players] == "0" || session[:players] == "1"
 		redirect "/ai-difficulty-selection"
@@ -42,7 +37,7 @@ post "/post-player-selection" do
 end
 
 get "/ai-difficulty-selection" do
-	players = session[:players].to_s
+	players = session[:players]
 	erb :page3_ai_difficulty_selection, locals:{players:players}
 end
 
@@ -63,6 +58,7 @@ get "/player-vs-player" do
 	game_board = session[:board]
 	session[:player]
 	player = session[:player]
+	p player
 	erb :page4_player_vs_player_board, locals:{player:player,game_board:game_board,error:error}
 end
 
@@ -106,6 +102,7 @@ get "/player_vs_ai" do
 end
 
 get "/post_player_vs_ai" do
+	p session[:player]
 	session[:board].update_board_with_position(session[:player].player,session[:ai_move].to_i)
 	if session[:board].winner_or_loser?()
             session[:outcome] = "Player #{session[:player].player} wins!"
@@ -119,6 +116,7 @@ get "/post_player_vs_ai" do
 end
 
 post "/post_player_vs_ai" do
+	p session[:player]
 	if session[:board].valid_position?(params[:move].to_i) == true
 		session[:board].update_board_with_position(session[:player].player,params[:move].to_i)
 	else
@@ -139,6 +137,7 @@ post "/post_player_vs_ai" do
 end
 
 get "/ai_vs_ai" do
+	p session[:player]
 	game_board = session[:board]
 	player = session[:player]
 	difficulty1 = session[:difficulty1]
@@ -154,7 +153,8 @@ get "/ai_vs_ai" do
 end
 
 get "/post_ai_vs_ai" do
-	p session[:ai_move].to_i
+	p session[:player]
+	session[:ai_move].to_i
 	session[:board].update_board_with_position(session[:player].player,session[:ai_move].to_i)
 	session[:error] = ""
 	if session[:board].winner_or_loser?()
@@ -170,6 +170,7 @@ get "/post_ai_vs_ai" do
 end
 
 get "/outcome" do
+	p session[:player]
 	session[:counter] = 0
 	outcome = session[:outcome]
 	game_board = session[:board]
