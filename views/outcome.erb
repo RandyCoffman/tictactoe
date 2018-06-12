@@ -7,21 +7,23 @@
 	<h2><%= outcome %></h2>
 	<br>
 	<table>
-	    <tr>
-	        <td><%= game_board.board["1"] %></td>
-	        <td><%= game_board.board["2"] %></td>
-	        <td><%= game_board.board["3"] %></td>
-	    </tr>
-	    <tr>
-	        <td><%= game_board.board["4"] %></td>
-	        <td><%= game_board.board["5"] %></td>
-	        <td><%= game_board.board["6"] %></td>
-	    </tr>
-	    <tr>
-	        <td><%= game_board.board["7"] %></td>
-	        <td><%= game_board.board["8"] %></td>
-	        <td><%= game_board.board["9"] %></td>
-	    </tr>
+		<% counter = 1 %>
+	    	<% game_board.board.each_pair do |board_index, board_piece| %>
+	    	<% if counter%3 == 1  %>
+	    		<tr>
+	    	<% end %>
+	    	<% if  board_piece  == "x" %>
+				<td id="<%= board_index %>" class="x" onclick="chooseMarker(this.id)"><%= board_piece %></td>
+			<% elsif  board_piece  == "o" %>
+				<td id="<%= board_piece %>" class="o" onclick="chooseMarker(this.id)"><%= board_piece %></td>
+			<% else %>
+				<td id="<%= board_index %>" onclick="chooseMarker(this.id)"><%= board_piece %></td>
+			<% end %>
+			<% if counter%3 == 0  %>
+				</tr>
+			<% end %>
+				<% counter = counter+1  %>
+			<% end %>
 	</table>
 	<br><br>
 	<p>Would you like to try again?</p>

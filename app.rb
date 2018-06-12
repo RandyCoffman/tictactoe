@@ -16,9 +16,9 @@ get "/" do
     redirect "/player-selection"
 end
 
-post "/post-size" do
-	redirect "/player-selection"
-end
+# post "/post-size" do
+# 	redirect "/player-selection"
+# end
 
 get "/player-selection" do
 	erb :page2_player_selection
@@ -170,15 +170,18 @@ get "/post_ai_vs_ai" do
 end
 
 get "/outcome" do
+	session[:counter] = 0
 	outcome = session[:outcome]
 	game_board = session[:board]
 	erb :outcome, locals:{outcome:outcome,game_board:game_board}
 end
 
 get "/how_to_win" do
+	session[:counter] = 0
 	erb :how_to_win
 end
 
 get "/about" do
+	session[:counter] = 0
 	erb :about
 end

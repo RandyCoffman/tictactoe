@@ -4,28 +4,31 @@
 	<title></title>
 </head>
 <body>
-	<table>
-	    <tr>
-	        <td><%= game_board.board["1"] %></td>
-	        <td><%= game_board.board["2"] %></td>
-	        <td><%= game_board.board["3"] %></td>
-	    </tr>
-	    <tr>
-	        <td><%= game_board.board["4"] %></td>
-	        <td><%= game_board.board["5"] %></td>
-	        <td><%= game_board.board["6"] %></td>
-	    </tr>
-	    <tr>
-	        <td><%= game_board.board["7"] %></td>
-	        <td><%= game_board.board["8"] %></td>
-	        <td><%= game_board.board["9"] %></td>
-	    </tr>
+	<h3><%= session[:player].player %>'s turn</h3>
+	<table id="table">
+		<% counter = 1 %>
+	    	<% game_board.board.each_pair do |board_index, board_piece| %>
+	    	<% if counter%3 == 1  %>
+	    		<tr>
+	    	<% end %>
+	    	<% if  board_piece  == "x" %>
+				<td id="<%= board_index %>" class="x" onclick="chooseMarker(this.id)"><%= board_piece %></td>
+			<% elsif  board_piece  == "o" %>
+				<td id="<%= board_piece %>" class="o" onclick="chooseMarker(this.id)"><%= board_piece %></td>
+			<% else %>
+				<td id="<%= board_index %>" onclick="chooseMarker(this.id)"><%= board_piece %></td>
+			<% end %>
+			<% if counter%3 == 0  %>
+				</tr>
+			<% end %>
+				<% counter = counter+1  %>
+			<% end %>
 	</table>
 	<div>
 		<p><%= error %></p>
 	</div>
 	<br>
-	<form method="post" action="post_player_vs_ai"> 
+	<form method="post" action="post_player_vs_ai" id="form"> 
 		<div>
 			<input id="move" type="text" name="move" placeholder="Move selection" maxlength="1" pattern="^\d*[123456789]$" required autofocus="">
 		</div>
@@ -33,6 +36,17 @@
 		<div>
 			<input type="submit" class="btn">
 		</div>
+	<script type="text/javascript" src="/js/onclick_function.js">
+	</script>
+	<script type="text/javascript">
+	function color_change(cell) {
+	var cell_id = document.getElementById(cell);
+    var text = cell_id.innerHTML
+    if (text === "x") {
+      document.getElementById(cell).style.backgroundColor = '#99C262';
+  	}
+  	}
+	</script>
 	</form>
 </body>
 </html>

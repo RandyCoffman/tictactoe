@@ -3,6 +3,14 @@ html{
   min-height: 100%;  
 }
 
+.x {
+  color: purple;
+}
+
+.o {
+  color: green;
+}
+
 .hide {
   display: none;
 }
