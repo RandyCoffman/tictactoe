@@ -8,7 +8,7 @@
 	<table>
 		<% counter = 1 %>
 	    	<% game_board.board.each_pair do |board_index, board_piece| %>
-	    	<% if counter%3 == 1  %>
+	    	<% if counter%session[:size] == 1  %>
 	    		<tr>
 	    	<% end %>
 	    	<% if  board_piece  == "x" %>
@@ -18,7 +18,7 @@
 			<% else %>
 				<td id="<%= board_index %>" onclick="chooseMarker(this.id)"><%= board_piece %></td>
 			<% end %>
-			<% if counter%3 == 0  %>
+			<% if counter%session[:size] == 0  %>
 				</tr>
 			<% end %>
 				<% counter = counter+1  %>
@@ -30,7 +30,7 @@
 	<br>
 	<form method="post" action="post-player-vs-player" id="form"> 
 		<div>
-			<input id="move" type="text" name="move" placeholder="Move selection" maxlength="1" pattern="^\d*[123456789]$" required autofocus="">
+			<input id="move" type="text" name="move" placeholder="Move selection" maxlength="2" pattern="^\d*[0123456789]$" required autofocus="">
 		</div>
 		<br>
 		<div>

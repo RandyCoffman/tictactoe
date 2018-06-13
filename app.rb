@@ -9,16 +9,17 @@ require_relative "app_functions.rb"
 enable :sessions
 
 get "/" do
-    redirect "/player-selection"
+    erb :page1_board_size
 end
 
-# post "/post-size" do
-# 	redirect "/player-selection"
-# end
+post "/post-size" do
+	session[:size] = params[:size].to_i
+	redirect "/player-selection"
+end
 
 get "/player-selection" do
 	session[:counter] = 1
-    session[:board] = Tictac_board.new(3)
+    session[:board] = Tictac_board.new(session[:size])
     session[:player] = TicTac_player.new
     session[:outcome] = ""
 	erb :page2_player_selection
@@ -88,12 +89,12 @@ get "/player_vs_ai" do
 	player = session[:player]
 	difficulty1 = session[:difficulty1]
 	if p1_p2 == "2" && session[:counter].odd?
-		session[:ai_move] = choose_ai(size=3,player.player,difficulty1).choice(game_board,player)
+		session[:ai_move] = choose_ai(session[:size],player.player,difficulty1).choice(game_board,player)
 		session[:counter] = session[:counter] + 1
 		session[:ai_move]
 		redirect "/post_player_vs_ai"
 	elsif p1_p2 == "1" && session[:counter].even?
-		session[:ai_move] = choose_ai(size=3,player.player,difficulty1).choice(game_board,player)
+		session[:ai_move] = choose_ai(session[:size],player.player,difficulty1).choice(game_board,player)
 		session[:counter] = session[:counter] + 1
 		redirect "/post_player_vs_ai"
 	end
@@ -143,10 +144,10 @@ get "/ai_vs_ai" do
 	difficulty1 = session[:difficulty1]
 	difficulty2 = session[:difficulty2]
 	if session[:counter].odd?
-		session[:ai_move] = choose_ai(size=3,player.player,difficulty1).choice(game_board,player)
+		session[:ai_move] = choose_ai(session[:size],player.player,difficulty1).choice(game_board,player)
 		redirect "/post_ai_vs_ai"
 	elsif session[:counter].even?
-		session[:ai_move] = choose_ai(size=3,player.player,difficulty2).choice(game_board,player)
+		session[:ai_move] = choose_ai(session[:size],player.player,difficulty2).choice(game_board,player)
 		redirect "/post_ai_vs_ai"
 	end
 	erb :page6_ai_vs_ai, locals:{player:player,difficulty1:difficulty1,difficulty2:difficulty2,game_board:game_board}
