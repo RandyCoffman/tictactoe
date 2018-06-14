@@ -192,8 +192,7 @@ class Unbeatable_ai
 			if x_fork.count == @size - 1
 			fork_array << x_fork
 			fork_array.each { |fork|
-				p fork | x_fork
-				real_fork = fork | x_fork
+				real_fork = fork & x_fork
 				if real_fork.count == 1 && board_class.valid_position?(real_fork.join.to_i) == true
 					return real_fork.join.to_i
 				end
@@ -211,7 +210,7 @@ class Unbeatable_ai
 			if o_fork.count == @size - 1
 			fork_array << o_fork
 			fork_array.each { |fork|
-				real_fork = fork | o_fork
+				real_fork = fork & o_fork
 				# p real_fork
 				if real_fork.count == 1 && board_class.valid_position?(real_fork.join.to_i) == true
 					return real_fork.join.to_i
@@ -231,9 +230,9 @@ class Unbeatable_ai
 	end
 
 	def block_fork(board_class,player)
-		if player.player == "o"
+		if player.player == "x"
 			create_fork_for_x(board_class)
-		elsif player.player == "x"
+		elsif player.player == "o"
 			create_fork_for_o(board_class)
 		end
 	end
