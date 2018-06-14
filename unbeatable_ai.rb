@@ -113,11 +113,11 @@ class Unbeatable_ai
 	def take_opposite_corner(board_class)
 		if corner_position(board_class).include?(spot_chosen_by_x(board_class).last) == true
 			move = spot_chosen_by_x(board_class).last
-			corner_hash = {1 => @size*(@size-1)+1, @size => @size**2, @size*(@size-1) => 1, @size**2 =>@size}
+			corner_hash = {1 => 3, 7 => 9, 7 => 9, 3 =>1}
 			corner_hash[move]
 		elsif corner_position(board_class).include?(spot_chosen_by_o(board_class).last) == true
 			move = spot_chosen_by_o(board_class).last
-			corner_hash = {1 => @size*(@size-1)+1, @size => @size**2, @size*(@size-1) => 1, @size**2 =>@size}
+			corner_hash = {1 => 3, 7 => 9, 7 => 9, 3 =>1}
 			corner_hash[move]
 		end
 	end
@@ -189,14 +189,11 @@ class Unbeatable_ai
 		for each_element in board_class.win
 			x_matches = each_element & spot_chosen_by_x(board_class)
 			x_fork = each_element - x_matches
-			# p x_fork
 			if x_fork.count == @size - 1
 			fork_array << x_fork
 			fork_array.each { |fork|
-				real_fork = fork & x_fork
-				# p fork 
-				# p x_fork
-				# p real_fork
+				p fork | x_fork
+				real_fork = fork | x_fork
 				if real_fork.count == 1 && board_class.valid_position?(real_fork.join.to_i) == true
 					return real_fork.join.to_i
 				end
@@ -214,7 +211,7 @@ class Unbeatable_ai
 			if o_fork.count == @size - 1
 			fork_array << o_fork
 			fork_array.each { |fork|
-				real_fork = fork & o_fork
+				real_fork = fork | o_fork
 				# p real_fork
 				if real_fork.count == 1 && board_class.valid_position?(real_fork.join.to_i) == true
 					return real_fork.join.to_i
@@ -234,9 +231,9 @@ class Unbeatable_ai
 	end
 
 	def block_fork(board_class,player)
-		if player.player == "x"
+		if player.player == "o"
 			create_fork_for_x(board_class)
-		elsif player.player == "o"
+		elsif player.player == "x"
 			create_fork_for_o(board_class)
 		end
 	end
@@ -244,10 +241,10 @@ class Unbeatable_ai
     def random(board_class,player)
         board = board_class.board
        	move = rand(1..@size**2)
-       	if board_class.valid_position?(move) == false
+       	if board_class.valid_position?(move.to_i) == false
        		random(board_class,player)
        	else
-       		move
+       		move.to_i
        	end
     end
 
