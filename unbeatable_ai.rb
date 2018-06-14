@@ -14,7 +14,6 @@ class Unbeatable_ai
 		take_opposite_corner(board_class), side_position(board_class), random(board_class,player)]
 
 		choice_array.each {|each_element|
-			counter = 0
 			if each_element.is_a? Integer
 				return each_element
 			end
