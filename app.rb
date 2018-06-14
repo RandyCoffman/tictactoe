@@ -14,14 +14,14 @@ end
 
 post "/post-size" do
 	session[:size] = params[:size].to_i
-	redirect "/player-selection"
-end
-
-get "/player-selection" do
 	session[:counter] = 1
     session[:board] = Tictac_board.new(session[:size])
     session[:player] = TicTac_player.new
     session[:outcome] = ""
+	redirect "/player-selection"
+end
+
+get "/player-selection" do
 	erb :page2_player_selection
 end
 
@@ -138,40 +138,37 @@ post "/post_player_vs_ai" do
 end
 
 get "/ai_vs_ai" do
-	p session[:player]
+	session[:player]
 	game_board = session[:board]
-	player = session[:player]
 	difficulty1 = session[:difficulty1]
 	difficulty2 = session[:difficulty2]
-	if session[:counter].odd?
-		session[:ai_move] = choose_ai(session[:size],player.player,difficulty1).choice(game_board,player)
-		redirect "/post_ai_vs_ai"
-	elsif session[:counter].even?
-		session[:ai_move] = choose_ai(session[:size],player.player,difficulty2).choice(game_board,player)
-		redirect "/post_ai_vs_ai"
+	while session[:outcome] == ""
+		if session[:counter].odd?
+			session[:player].player = "x"
+			session[:ai_move] = choose_ai(session[:size],session[:player],difficulty1).choice(game_board,session[:player])
+			session[:board].update_board_with_position(session[:player].player,session[:ai_move].to_i)
+			session[:counter] = session[:counter] + 1
+		elsif session[:counter].even?
+			session[:player].player = "o"
+			session[:ai_move] = choose_ai(session[:size],session[:player],difficulty2).choice(game_board,session[:player])
+			session[:board].update_board_with_position(session[:player].player,session[:ai_move].to_i)
+			session[:counter] = session[:counter] + 1
+		end
+		if session[:board].winner_or_loser?()
+			p "win"
+	            session[:outcome] = "Player #{session[:player].player} wins!"
+	            redirect "/outcome"
+	    elsif session[:board].board_full? == false
+	    	p "tie"
+	            session[:outcome] = "Tie!"
+	            redirect "/outcome"
+	    end
 	end
-	erb :page6_ai_vs_ai, locals:{player:player,difficulty1:difficulty1,difficulty2:difficulty2,game_board:game_board}
-end
-
-get "/post_ai_vs_ai" do
-	p session[:player]
-	session[:ai_move].to_i
-	session[:board].update_board_with_position(session[:player].player,session[:ai_move].to_i)
-	session[:error] = ""
-	if session[:board].winner_or_loser?()
-            session[:outcome] = "Player #{session[:player].player} wins!"
-            redirect "/outcome"
-    elsif session[:board].board_full? == false
-            session[:outcome] = "Tie!"
-            redirect "/outcome"
-    end
-    session[:counter] = session[:counter] + 1
-	session[:player].change_icon
-	redirect "/ai_vs_ai"
 end
 
 get "/outcome" do
-	p session[:player]
+	p "done"
+	session[:player]
 	session[:counter] = 0
 	outcome = session[:outcome]
 	game_board = session[:board]
