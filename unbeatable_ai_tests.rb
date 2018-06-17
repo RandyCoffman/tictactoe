@@ -144,7 +144,7 @@ class Tictac_unbeatable_ai_test < Minitest::Test
 	def test_side
 		unbeatable = Unbeatable_ai.new(3,"o")
 		board = Tictac_board.new(3)
-		testing = unbeatable.side_position(board)
+		testing = unbeatable.get_side_positions(board)
 		# p testing
 
 		assert_equal([2,4,6,8], testing)
@@ -153,7 +153,7 @@ class Tictac_unbeatable_ai_test < Minitest::Test
 	def test_side2
 		unbeatable = Unbeatable_ai.new(5,"o")
 		board = Tictac_board.new(5)
-		testing = unbeatable.side_position(board)
+		testing = unbeatable.get_side_positions(board)
 		# p testing
 
 		assert_equal([2,3,4,6,10,11,15,16,20,22,23,24], testing)
@@ -162,7 +162,7 @@ class Tictac_unbeatable_ai_test < Minitest::Test
 	def test_side3
 		unbeatable = Unbeatable_ai.new(9,"o")
 		board = Tictac_board.new(9)
-		testing = unbeatable.side_position(board)
+		testing = unbeatable.get_side_positions(board)
 		# p testing
 
 		assert_equal([2,3,4,5,6,7,8,10,18,19,27,28,36,37,45,46,54,55,63,64,72,74,75,76,77,78,79,80], testing)
@@ -338,7 +338,7 @@ class Tictac_unbeatable_ai_test < Minitest::Test
 		p player.player
 		board.board = {"1"=>"o","2"=>"x","3"=>3,"4"=>4,"5"=>"x","6"=>6,"7"=>"o","8"=>8,"9"=>9}
 		testing = unbeatable.create_forks(board,player)
-		assert_equal(9,testing)
+		assert_equal(3,testing)
 	end
 
 	def test_fork2
@@ -354,12 +354,9 @@ class Tictac_unbeatable_ai_test < Minitest::Test
 		unbeatable = Unbeatable_ai.new(3,"x")
 		board = Tictac_board.new(3)
 		player = TicTac_player.new
-		board.board = {"1"=>"x","2"=>2,"3"=>"o","4"=>4,"5"=>"o","6"=>6,"7"=>7,"8"=>8,"9"=>"x"}
+		board.board = {"1"=>"x","2"=>2,"3"=>3,"4"=>4,"5"=>"o","6"=>6,"7"=>7,"8"=>8,"9"=>"x"}
 		testing = unbeatable.create_forks(board,player)
-		# x2o
-		# 4o6
-		# 78x
-		assert_equal(7,testing)
+		assert_equal(3,testing)
 	end
 
 	def test_block_fork
@@ -367,7 +364,6 @@ class Tictac_unbeatable_ai_test < Minitest::Test
 		board = Tictac_board.new(3)
 		player = TicTac_player.new
 		player.change_icon
-		p player.player
 		board.board = {"1"=>"x","2"=>2,"3"=>3,"4"=>4,"5"=>"o","6"=>6,"7"=>"x","8"=>8,"9"=>"o"}
 		testing = unbeatable.block_fork(board,player)
 		assert_equal(3,testing)
@@ -386,9 +382,10 @@ class Tictac_unbeatable_ai_test < Minitest::Test
 		unbeatable = Unbeatable_ai.new(3,"x")
 		board = Tictac_board.new(3)
 		player = TicTac_player.new
-		board.board = {"1"=>"x","2"=>2,"3"=>"o","4"=>4,"5"=>"o","6"=>6,"7"=>7,"8"=>8,"9"=>"x"}
+		player.change_icon
+		board.board = {"1"=>"x","2"=>"o","3"=>3,"4"=>4,"5"=>"o","6"=>6,"7"=>"x","8"=>8,"9"=>"x"}
 		testing = unbeatable.block_fork(board,player)
-		assert_equal(2,testing)
+		assert_equal(3,testing)
 	end
 
 	

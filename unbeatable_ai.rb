@@ -107,7 +107,8 @@ class Unbeatable_ai
 	side_array << (@size*(@size-1)..(@size**2)).to_a
 	side_array.flatten!
 	side_array.uniq!
-	side_array.delete_if { |x| x > @size**2}
+	side_array = side_array - corner_position(board_class)
+	side_array = side_array.delete_if { |x| x > @size**2}
 	end
 
 	def take_corner_spot_if_middle_is_chosen(board_class,player)
@@ -209,6 +210,7 @@ class Unbeatable_ai
 				my_fork = each_element - matches
 				# p my_fork
 				if my_fork.count == @size - 1
+					p get_side_positions(board_class)
 					done = my_fork - get_side_positions(board_class)
 					while board_class.valid_position?(done[counter]) != true
 						counter = counter + 1
