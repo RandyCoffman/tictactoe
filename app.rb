@@ -9,10 +9,19 @@ require_relative "app_functions.rb"
 enable :sessions
 
 get "/" do
-    session[:board] = Tictac_board.new(session[:size]=3)
+    erb :page1_board_size
+end
+
+post "/post-size" do
+ 	session[:size] = params[:size].to_i
+    redirect "/player-selection"
+end
+
+get "/player-selection" do
+    session[:board] = Tictac_board.new(session[:size])
     session[:player] = TicTac_player.new
     session[:outcome] = ""
-	erb :page2_player_selection
+    erb :page2_player_selection
 end
 
 post "/post-player-selection" do

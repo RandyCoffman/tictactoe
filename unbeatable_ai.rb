@@ -95,14 +95,29 @@ class Unbeatable_ai
  		end
 	end
 
+	def get_side_positions(board_class)
+	board = board_class.board
+	side_array = *(1..@size)
+	counter = 1
+	@size.times do
+		side_array << ((@size * counter))
+		side_array << ((@size * counter) + 1)
+		counter = counter + 1
+	end
+	side_array << (@size*(@size-1)..(@size**2)).to_a
+	side_array.flatten!
+	side_array.uniq!
+	side_array.delete_if { |x| x > @size**2}
+	end
+
 	def take_corner_spot_if_middle_is_chosen(board_class,player)
 		if player.player == "o"
 			if spot_chosen_by_x(board_class).last == middle_position(board_class).to_i
-       			return 7
+       			return @size**2
 			end
 		elsif player.player == "x" 
 			if spot_chosen_by_o(board_class).last == middle_position(board_class).to_i
-				return 7
+				return @size**2
 			end
 			"no corner"
 		end
@@ -111,11 +126,11 @@ class Unbeatable_ai
 	def take_opposite_corner(board_class)
 		if corner_position(board_class).include?(spot_chosen_by_x(board_class).last) == true
 			move = spot_chosen_by_x(board_class).last
-			corner_hash = {1 => 9, 7 => 3, 9 => 1, 3 =>7}
+			corner_hash = {1 => @size**2, @size => @size*(@size-1)+1, @size*(@size-1)+1 => @size, @size**2 =>1}
 			return corner_hash[move].to_i
 		elsif corner_position(board_class).include?(spot_chosen_by_o(board_class).last) == true
 			move = spot_chosen_by_o(board_class).last
-			corner_hash = {1 => 9, 7 => 3, 9 => 1, 3 =>7}
+			corner_hash = {1 => @size**2, @size => @size*(@size-1)+1, @size*(@size-1)+1 => @size, @size**2 =>1}
 			return corner_hash[move].to_i
 		end
 	end
@@ -193,8 +208,8 @@ class Unbeatable_ai
 				# p ""
 				my_fork = each_element - matches
 				# p my_fork
-				if my_fork.count == 2
-					done = my_fork - [2,4,6,8]
+				if my_fork.count == @size - 1
+					done = my_fork - get_side_positions(board_class)
 					while board_class.valid_position?(done[counter]) != true
 						counter = counter + 1
 					end
@@ -213,7 +228,7 @@ class Unbeatable_ai
 				matches = each_element & spot_chosen_by_o(board_class)
 				my_fork = each_element - matches
 				if my_fork.count == 2
-					done = my_fork - [2,4,6,8]
+					done = my_fork - get_side_positions(board_class)
 					while board_class.valid_position?(done[counter]) != true
 						counter = counter + 1
 					end
