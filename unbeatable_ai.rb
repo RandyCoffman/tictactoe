@@ -5,18 +5,22 @@ class Unbeatable_ai
 
     def initialize(size,marker)
         @size = size
+
     end
 
 	def choice(board_class,player)
-		choice_array = [take_win(board_class,player), block_win(board_class,player), 
-		create_forks(board_class,player), block_fork(board_class,player),
-		take_middle_if_first(board_class,player), take_corner_spot_if_middle_is_chosen(board_class,player), 
-		take_opposite_corner(board_class), side_position(board_class), random(board_class,player)]
+		choice_array = [
+		take_win(board_class,player), block_win(board_class,player), 
+		create_forks(board_class,player), block_fork(board_class,player), 
+		take_middle_if_first(board_class,player), take_corner_spot_if_middle_is_chosen(board_class,player),
+		take_opposite_corner(board_class), side_position(board_class), random(board_class,player)
+		]
 
 		choice_array.each {|each_element|
-			p each_element
 			if each_element.is_a? Integer
-				return each_element
+				if board_class.valid_position?(each_element) == true
+					return each_element
+				end
 			end
 		}
 
@@ -81,30 +85,24 @@ class Unbeatable_ai
 	side_array.uniq!
 	side_array.delete_if { |x| x > @size**2}
  		side_array = side_array - corner_position(board_class)
- 		side_array
- 		return side_array
+ 		side_array = side_array - spot_chosen_by_o(board_class)
+ 		side_array = side_array - spot_chosen_by_x(board_class)
+ 		move = side_array.sample
+ 		if board_class.valid_position?(move) == true
+ 			return move.to_i
+ 		else
+ 			side_position(board_class)
+ 		end
 	end
 
 	def take_corner_spot_if_middle_is_chosen(board_class,player)
 		if player.player == "o"
 			if spot_chosen_by_x(board_class).last == middle_position(board_class).to_i
-				move = corner_position(board_class)
-				move = move.sample
-				if board_class.valid_position?(move) == false
-       				take_corner_spot_if_middle_is_chosen(board_class,player)
-       			else
-       				return move.to_i
-       			end
+       			return 7
 			end
 		elsif player.player == "x" 
 			if spot_chosen_by_o(board_class).last == middle_position(board_class).to_i
-				move = corner_position(board_class)
-				move = move.sample
-				if board_class.valid_position?(move) == false
-       				take_corner_spot_if_middle_is_chosen(board_class,player)
-       			else
-       				return move.to_i
-       			end
+				return 7
 			end
 			"no corner"
 		end
@@ -113,12 +111,12 @@ class Unbeatable_ai
 	def take_opposite_corner(board_class)
 		if corner_position(board_class).include?(spot_chosen_by_x(board_class).last) == true
 			move = spot_chosen_by_x(board_class).last
-			corner_hash = {1 => 3, 7 => 9, 7 => 9, 3 =>1}
-			corner_hash[move]
+			corner_hash = {1 => 9, 7 => 3, 9 => 1, 3 =>7}
+			return corner_hash[move].to_i
 		elsif corner_position(board_class).include?(spot_chosen_by_o(board_class).last) == true
 			move = spot_chosen_by_o(board_class).last
-			corner_hash = {1 => 3, 7 => 9, 7 => 9, 3 =>1}
-			corner_hash[move]
+			corner_hash = {1 => 9, 7 => 3, 9 => 1, 3 =>7}
+			return corner_hash[move].to_i
 		end
 	end
 
@@ -186,18 +184,22 @@ class Unbeatable_ai
 
 	def create_fork_for_x(board_class)
 		fork_array = []
-		for each_element in board_class.win
-			x_matches = each_element & spot_chosen_by_x(board_class)
-			x_fork = each_element - x_matches
-			if x_fork.count == @size - 1
-			fork_array << x_fork
-			fork_array.each { |fork|
-				p fork & x_fork
-				real_fork = fork & x_fork
-				if real_fork.count == 1 && board_class.valid_position?(real_fork.join.to_i) == true
-					return real_fork.join.to_i
+		counter = 0
+		# p spot_chosen_by_x(board_class).count
+		if spot_chosen_by_x(board_class).count > 1
+			for each_element in board_class.win
+				matches = each_element & spot_chosen_by_x(board_class)
+				# p matches
+				# p ""
+				my_fork = each_element - matches
+				# p my_fork
+				if my_fork.count == 2
+					done = my_fork - [2,4,6,8]
+					while board_class.valid_position?(done[counter]) != true
+						counter = counter + 1
+					end
+					return done[counter]
 				end
-			}
 			end
 		end
 		"no fork"
@@ -205,18 +207,18 @@ class Unbeatable_ai
 
 	def create_fork_for_o(board_class)
 		fork_array = []
-		for each_element in board_class.win
-			o_matches = each_element & spot_chosen_by_o(board_class)
-			o_fork = each_element - o_matches
-			if o_fork.count == @size - 1
-			fork_array << o_fork
-			fork_array.each { |fork|
-				real_fork = fork & o_fork
-				# p real_fork
-				if real_fork.count == 1 && board_class.valid_position?(real_fork.join.to_i) == true
-					return real_fork.join.to_i
+		counter = 0
+		if spot_chosen_by_o(board_class).count > 1
+			for each_element in board_class.win
+				matches = each_element & spot_chosen_by_o(board_class)
+				my_fork = each_element - matches
+				if my_fork.count == 2
+					done = my_fork - [2,4,6,8]
+					while board_class.valid_position?(done[counter]) != true
+						counter = counter + 1
+					end
+					return done[counter]
 				end
-			}
 			end
 		end
 		"no fork"
@@ -231,9 +233,9 @@ class Unbeatable_ai
 	end
 
 	def block_fork(board_class,player)
-		if player.player == "x"
+		if player.player == "o"
 			create_fork_for_x(board_class)
-		elsif player.player == "o"
+		elsif player.player == "x"
 			create_fork_for_o(board_class)
 		end
 	end
