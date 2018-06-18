@@ -17,16 +17,24 @@ class Tictac_console_test < Minitest::Test
 	end
 
 	def test_unbeatable_vs_unbeatable_1000_times
-		counter = 0
+		tie_counter = 0
+		x_wins = 0
+		o_wins = 0
 		1000.times do
 			console_game
-			p counter
-			if console_game == "Tie!"
-				counter += 1
+			if console_game != "Player x wins!" || console_game != "Player o wins!"
+				puts "tie"
+				tie_counter += 1
+			elsif console_game == "Player x wins!"
+				puts "x wins"
+				x_wins += 1
+			else
+				p "#{console_game}"
+				o_wins += 1
 			end
-			if counter == 1000
-				p counter
-			end
+			p "ties #{tie_counter}"
+			p "player x won this many times #{x_wins}"
+			p "random things returning #{o_wins}"
 		end
 	end
 

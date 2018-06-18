@@ -13,7 +13,7 @@ class Unbeatable_ai
 		take_win(board_class,player), block_win(board_class,player), 
 		create_forks(board_class,player), block_fork(board_class,player), 
 		take_middle_if_first(board_class,player), take_corner_spot_if_middle_is_chosen(board_class,player),
-		take_opposite_corner(board_class), side_position(board_class), random(board_class,player)
+		take_opposite_corner(board_class), get_side_positions(board_class).sample, random(board_class,player)
 		]
 
 		choice_array.each {|each_element|
@@ -97,18 +97,15 @@ class Unbeatable_ai
 
 	def get_side_positions(board_class)
 	board = board_class.board
-	side_array = *(1..@size)
+	side_array = []
 	counter = 1
-	@size.times do
-		side_array << ((@size * counter))
-		side_array << ((@size * counter) + 1)
+	(@size + 1).times do
+		side_array << (@size-1) * counter
 		counter = counter + 1
 	end
-	side_array << (@size*(@size-1)..(@size**2)).to_a
-	side_array.flatten!
-	side_array.uniq!
-	side_array = side_array - corner_position(board_class)
-	side_array = side_array.delete_if { |x| x > @size**2}
+	side_array = side_array - spot_chosen_by_x(board_class)
+	side_array = side_array - spot_chosen_by_o(board_class)
+	side_array
 	end
 
 	def take_corner_spot_if_middle_is_chosen(board_class,player)
@@ -120,7 +117,6 @@ class Unbeatable_ai
 			if spot_chosen_by_o(board_class).last == middle_position(board_class).to_i
 				return @size**2
 			end
-			"no corner"
 		end
 	end
 
@@ -160,6 +156,7 @@ class Unbeatable_ai
 		for each_element in board_class.win
 			x_matches = each_element & spot_chosen_by_x(board_class)
 			if x_matches.count == @size - 1
+				x_win = each_element - spot_chosen_by_x(board_class)
 				x_win = each_element - x_matches
 				if board_class.valid_position?(x_win.join.to_i) == true
 					return x_win.join.to_i
@@ -173,6 +170,7 @@ class Unbeatable_ai
 		for each_element in board_class.win
 			o_matches = each_element & spot_chosen_by_o(board_class)
 			if o_matches.count == @size - 1
+				o_win = each_element - spot_chosen_by_o(board_class)
 				o_win = each_element - o_matches
 				if board_class.valid_position?(o_win.join.to_i) == true
 					return o_win.join.to_i
@@ -210,7 +208,7 @@ class Unbeatable_ai
 				my_fork = each_element - matches
 				# p my_fork
 				if my_fork.count == @size - 1
-					done = my_fork - [1, @size, @size*(@size-1)+1, @size**2]
+					done = my_fork - get_side_positions(board_class)
 					while board_class.valid_position?(done[counter]) != true
 						counter = counter + 1
 					end
@@ -229,8 +227,7 @@ class Unbeatable_ai
 				matches = each_element & spot_chosen_by_o(board_class)
 				my_fork = each_element - matches
 				if my_fork.count == @size - 1
-					done = my_fork - [1, @size, @size*(@size-1)+1, @size**2]
-
+					done = my_fork - get_side_positions(board_class)
 					while board_class.valid_position?(done[counter]) != true
 						counter = counter + 1
 					end
