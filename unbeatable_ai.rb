@@ -210,7 +210,6 @@ class Unbeatable_ai
 				my_fork = each_element - matches
 				# p my_fork
 				if my_fork.count == @size - 1
-					p get_side_positions(board_class)
 					done = my_fork - [1, @size, @size*(@size-1)+1, @size**2]
 					while board_class.valid_position?(done[counter]) != true
 						counter = counter + 1
