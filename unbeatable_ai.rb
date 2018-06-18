@@ -211,7 +211,7 @@ class Unbeatable_ai
 				# p my_fork
 				if my_fork.count == @size - 1
 					p get_side_positions(board_class)
-					done = my_fork - get_side_positions(board_class)
+					done = my_fork - [1, @size, @size*(@size-1)+1, @size**2]
 					while board_class.valid_position?(done[counter]) != true
 						counter = counter + 1
 					end
@@ -229,8 +229,9 @@ class Unbeatable_ai
 			for each_element in board_class.win
 				matches = each_element & spot_chosen_by_o(board_class)
 				my_fork = each_element - matches
-				if my_fork.count == 2
-					done = my_fork - get_side_positions(board_class)
+				if my_fork.count == @size - 1
+					done = my_fork - [1, @size, @size*(@size-1)+1, @size**2]
+
 					while board_class.valid_position?(done[counter]) != true
 						counter = counter + 1
 					end
