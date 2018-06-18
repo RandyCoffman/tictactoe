@@ -20,21 +20,18 @@ class Tictac_console_test < Minitest::Test
 		tie_counter = 0
 		x_wins = 0
 		o_wins = 0
-		1000.times do
+		until tie_counter + x_wins == 1000
 			console_game
-			if console_game != "Player x wins!" || console_game != "Player o wins!"
-				puts "tie"
+			if console_game == "Tie!"
 				tie_counter += 1
-			elsif console_game == "Player x wins!"
-				puts "x wins"
+			elsif console_game == "Player x won!"
 				x_wins += 1
-			else
-				p "#{console_game}"
+			elsif console_game == "Player o won!"
 				o_wins += 1
 			end
-			p "ties #{tie_counter}"
+			p "ties against eachother #{tie_counter}"
 			p "player x won this many times #{x_wins}"
-			p "random things returning #{o_wins}"
+			p "player o won this many times (non-unbeatable function) #{o_wins}"
 		end
 	end
 

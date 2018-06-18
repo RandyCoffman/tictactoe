@@ -24,7 +24,7 @@ def console_game()
         end
         game_board.update_board_with_position(player.player,choice)
         if game_board.winner_or_loser?()
-            outcome = "Player #{player.player} wins!"
+            outcome = "Player #{player.player} won!"
         elsif game_board.board_full? == false
             outcome = "Tie!"
         end
