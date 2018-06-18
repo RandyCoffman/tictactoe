@@ -212,7 +212,7 @@ class Unbeatable_ai
 					while board_class.valid_position?(done[counter]) != true
 						counter = counter + 1
 					end
-					return done[counter]
+					return done[counter+1]
 				end
 			end
 		end
@@ -231,7 +231,7 @@ class Unbeatable_ai
 					while board_class.valid_position?(done[counter]) != true
 						counter = counter + 1
 					end
-					return done[counter]
+					return done[counter+1]
 				end
 			end
 		end

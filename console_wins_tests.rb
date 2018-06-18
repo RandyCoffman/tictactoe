@@ -30,8 +30,8 @@ class Tictac_console_test < Minitest::Test
 				o_wins += 1
 			end
 			p "ties against eachother #{tie_counter}"
-			p "player x won this many times #{x_wins}"
-			p "player o won this many times (non-unbeatable function) #{o_wins}"
+			p "player x (unbeatable) won this many times #{x_wins}"
+			p "player o won this many times (beatable) #{o_wins}"
 		end
 	end
 
