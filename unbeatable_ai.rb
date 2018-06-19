@@ -212,11 +212,11 @@ class Unbeatable_ai
 				my_fork = each_element - matches
 				# p my_fork
 				if my_fork.count == @size - 1
-					done = get_side_positions(board_class) - spot_chosen_by_o(board_class)
-					while board_class.valid_position?(done[counter]) != true
+					done = corner_position(board_class) - spot_chosen_by_o(board_class)
+					while board_class.valid_position?(done[counter-1]) != true
 						counter = counter + 1
 					end
-					return done[counter]
+					return done[counter-1]
 				end
 			end
 		end
@@ -231,11 +231,11 @@ class Unbeatable_ai
 				matches = each_element & spot_chosen_by_o(board_class)
 				my_fork = each_element - matches
 				if my_fork.count == @size - 1
-					done = get_side_positions(board_class) - spot_chosen_by_x(board_class)
-					while board_class.valid_position?(done[counter]) != true
+					done = corner_position(board_class) - spot_chosen_by_x(board_class)
+					while board_class.valid_position?(done[counter-1]) != true
 						counter = counter + 1
 					end
-					return done[counter]
+					return done[counter-1]
 				end
 			end
 		end
@@ -263,10 +263,10 @@ class Unbeatable_ai
 				# p my_fork
 				if my_fork.count == @size - 1
 					done = corner_position(board_class) - spot_chosen_by_o(board_class)
-					while board_class.valid_position?(done[counter-2]) != true
+					while board_class.valid_position?(done[counter-1]) != true
 						counter = counter + 1
 					end
-					return done[counter-2]
+					return done[counter-1]
 				end
 			end
 		end
@@ -282,10 +282,10 @@ class Unbeatable_ai
 				my_fork = each_element - matches
 				if my_fork.count == @size - 1
 					done = corner_position(board_class) - spot_chosen_by_x(board_class)
-					while board_class.valid_position?(done[counter-2]) != true
+					while board_class.valid_position?(done[counter-1]) != true
 						counter = counter + 1
 					end
-					return done[counter-2]
+					return done[counter-1]
 				end
 			end
 		end
