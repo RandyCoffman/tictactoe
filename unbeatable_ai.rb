@@ -160,7 +160,7 @@ class Unbeatable_ai
 		for each_element in board_class.win
 			x_matches = each_element & spot_chosen_by_x(board_class)
 			if x_matches.count == 1
-				x_win = each_element - spot_chosen_by_o(board_class)
+				x_win = x_matches - spot_chosen_by_o(board_class)
 				if board_class.valid_position?(x_win.join.to_i) == true
 					return x_win.join.to_i
 				end
@@ -173,7 +173,7 @@ class Unbeatable_ai
 		for each_element in board_class.win
 			o_matches = each_element & spot_chosen_by_o(board_class)
 			if o_matches.count == 1
-				o_win = each_element - spot_chosen_by_x(board_class)
+				o_win = o_matches - spot_chosen_by_x(board_class)
 				if board_class.valid_position?(o_win.join.to_i) == true
 					return o_win.join.to_i
 				end
