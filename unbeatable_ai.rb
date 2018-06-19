@@ -97,14 +97,18 @@ class Unbeatable_ai
 
 	def get_side_positions(board_class)
 	board = board_class.board
-	side_array = []
+	side_array = *(1..@size)
 	counter = 1
-	(@size + 1).times do
-		side_array << (@size-1) * counter
+	@size.times do
+		side_array << ((@size * counter))
+		side_array << ((@size * counter) + 1)
 		counter = counter + 1
 	end
-	side_array = side_array - spot_chosen_by_x(board_class)
-	side_array = side_array - spot_chosen_by_o(board_class)
+	side_array << (@size*(@size-1)..(@size**2)).to_a
+	side_array.flatten!
+	side_array.uniq!
+	side_array.delete_if { |x| x > @size**2}
+	side_array = side_array - corner_position(board_class)
 	side_array
 	end
 
@@ -212,7 +216,7 @@ class Unbeatable_ai
 					while board_class.valid_position?(done[counter]) != true
 						counter = counter + 1
 					end
-					return done[counter+1]
+					return done[counter]
 				end
 			end
 		end
@@ -231,7 +235,7 @@ class Unbeatable_ai
 					while board_class.valid_position?(done[counter]) != true
 						counter = counter + 1
 					end
-					return done[counter+1]
+					return done[counter]
 				end
 			end
 		end
