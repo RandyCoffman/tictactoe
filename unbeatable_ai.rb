@@ -18,8 +18,8 @@ class Unbeatable_ai
 
 		choice_array.each {|each_element|
 			if each_element.is_a? Integer
-				if board_class.valid_position?(each_element) == true
-						return each_element
+			if board_class.valid_position?(each_element) == true
+					return each_element
 				end
 			end
 		}
@@ -73,28 +73,53 @@ class Unbeatable_ai
 
 	def side_position(board_class)
 	board = board_class.board
-	side_array = [2,4,6,8]
+	side_array = *(1..@size)
+	counter = 1
+	@size.times do
+		side_array << ((@size * counter))
+		side_array << ((@size * counter) + 1)
+		counter = counter + 1
+	end
+	side_array << (@size*(@size-1)..(@size**2)).to_a
+	side_array.flatten!
+	side_array.uniq!
+	side_array.delete_if { |x| x > @size**2}
+ 		side_array = side_array - corner_position(board_class)
+ 		side_array = side_array - spot_chosen_by_o(board_class)
+ 		side_array = side_array - spot_chosen_by_x(board_class)
+ 		move = side_array.sample
+ 		if board_class.valid_position?(move) == true
+ 			return move.to_i
+ 		else
+ 			side_position(board_class)
+ 		end
 	end
 
 	def get_side_positions(board_class)
 	board = board_class.board
-	side_array = [2,4,6,8]
-	move = side_array.sample
-		if board.valid_position?(move) == true
-			return move
-		else
-			get_side_positions(board_class)
-		end
+	side_array = *(1..@size)
+	counter = 1
+	@size.times do
+		side_array << ((@size * counter))
+		side_array << ((@size * counter) + 1)
+		counter = counter + 1
+	end
+	side_array << (@size*(@size-1)..(@size**2)).to_a
+	side_array.flatten!
+	side_array.uniq!
+	side_array.delete_if { |x| x > @size**2}
+	side_array = side_array - corner_position(board_class)
+	side_array
 	end
 
 	def take_corner_spot_if_middle_is_chosen(board_class,player)
 		if player.player == "o"
 			if spot_chosen_by_x(board_class).last == middle_position(board_class).to_i
-       			return 9
+       			return @size**2
 			end
 		elsif player.player == "x" 
 			if spot_chosen_by_o(board_class).last == middle_position(board_class).to_i
-				return 9
+				return @size**2
 			end
 		end
 	end
@@ -102,11 +127,11 @@ class Unbeatable_ai
 	def take_opposite_corner(board_class)
 		if corner_position(board_class).include?(spot_chosen_by_x(board_class).last) == true
 			move = spot_chosen_by_x(board_class).last
-			corner_hash = {1 => 9, 3 => 7, 7 => 3, 9 =>1}
+			corner_hash = {1 => @size**2, @size => @size*(@size-1)+1, @size*(@size-1)+1 => @size, @size**2 =>1}
 			return corner_hash[move].to_i
 		elsif corner_position(board_class).include?(spot_chosen_by_o(board_class).last) == true
 			move = spot_chosen_by_o(board_class).last
-			corner_hash = {1 => 9, 3 => 7, 7 => 3, 9 =>1}
+			corner_hash = {1 => @size**2, @size => @size*(@size-1)+1, @size*(@size-1)+1 => @size, @size**2 =>1}
 			return corner_hash[move].to_i
 		end
 	end
@@ -186,7 +211,7 @@ class Unbeatable_ai
 				# p ""
 				my_fork = each_element - matches
 				# p my_fork
-				if my_fork.count == @size - 2
+				if my_fork.count == @size - 1
 					done = my_fork - get_side_positions(board_class)
 					while board_class.valid_position?(done[counter]) != true
 						counter = counter + 1
@@ -205,7 +230,7 @@ class Unbeatable_ai
 			for each_element in board_class.win
 				matches = each_element & spot_chosen_by_o(board_class)
 				my_fork = each_element - matches
-				if my_fork.count == @size - 2
+				if my_fork.count == @size - 1
 					done = my_fork - get_side_positions(board_class)
 					while board_class.valid_position?(done[counter]) != true
 						counter = counter + 1
