@@ -18,7 +18,7 @@ class Unbeatable_ai
 
 		choice_array.each {|each_element|
 			if each_element.is_a? Integer
-				if board_class.valid_position?(each_element) == true
+			if board_class.valid_position?(each_element) == true
 					return each_element
 				end
 			end
