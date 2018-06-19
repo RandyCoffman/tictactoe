@@ -159,8 +159,8 @@ class Unbeatable_ai
 	def take_win_if_available_player_x(board_class)
 		for each_element in board_class.win
 			x_matches = each_element & spot_chosen_by_x(board_class)
-			if x_matches.count == @size - 1
-				x_win = each_element - spot_chosen_by_x(board_class)
+			if x_matches.count == @size - 2
+				x_win = each_element - spot_chosen_by_o(board_class)
 				x_win = each_element - x_matches
 				if board_class.valid_position?(x_win.join.to_i) == true
 					return x_win.join.to_i
@@ -173,8 +173,8 @@ class Unbeatable_ai
 	def take_win_if_available_player_o(board_class)
 		for each_element in board_class.win
 			o_matches = each_element & spot_chosen_by_o(board_class)
-			if o_matches.count == @size - 1
-				o_win = each_element - spot_chosen_by_o(board_class)
+			if o_matches.count == @size - 2
+				o_win = each_element - spot_chosen_by_x(board_class)
 				o_win = each_element - o_matches
 				if board_class.valid_position?(o_win.join.to_i) == true
 					return o_win.join.to_i
