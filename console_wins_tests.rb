@@ -20,7 +20,7 @@ class Tictac_console_test < Minitest::Test
 		tie_counter = 0
 		x_wins = 0
 		o_wins = 0
-		until tie_counter + x_wins == 10000
+		until tie_counter + x_wins == 1000
 			console_game
 			if console_game == "Tie!"
 				tie_counter += 1
