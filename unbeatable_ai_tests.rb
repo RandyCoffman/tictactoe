@@ -335,10 +335,9 @@ class Tictac_unbeatable_ai_test < Minitest::Test
 		board = Tictac_board.new(3)
 		player = TicTac_player.new
 		player.change_icon
-		p player.player
 		board.board = {"1"=>"o","2"=>"x","3"=>3,"4"=>4,"5"=>"x","6"=>6,"7"=>"o","8"=>8,"9"=>9}
 		testing = unbeatable.create_forks(board,player)
-		assert_equal(3,testing)
+		assert_equal(9,testing)
 	end
 
 	def test_fork2
