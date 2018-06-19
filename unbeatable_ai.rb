@@ -212,7 +212,7 @@ class Unbeatable_ai
 				my_fork = each_element - matches
 				# p my_fork
 				if my_fork.count == @size - 1
-					done = get_side_positions(board_class) - spot_chosen_by_o(board_class)
+					done = corner_position(board_class) - spot_chosen_by_o(board_class)
 					while board_class.valid_position?(done[counter-2]) != true
 						counter = counter + 1
 					end
@@ -231,7 +231,7 @@ class Unbeatable_ai
 				matches = each_element & spot_chosen_by_o(board_class)
 				my_fork = each_element - matches
 				if my_fork.count == @size - 1
-					done = get_side_positions(board_class) - spot_chosen_by_x(board_class)
+					done = corner_position(board_class) - spot_chosen_by_x(board_class)
 					while board_class.valid_position?(done[counter-2]) != true
 						counter = counter + 1
 					end
@@ -250,11 +250,53 @@ class Unbeatable_ai
 		end
 	end
 
+	def block_fork_for_x(board_class)
+		fork_array = []
+		counter = 0
+		# p spot_chosen_by_x(board_class).count
+		if spot_chosen_by_x(board_class).count > 1
+			for each_element in board_class.win
+				matches = each_element & spot_chosen_by_x(board_class)
+				# p matches
+				# p ""
+				my_fork = each_element - matches
+				# p my_fork
+				if my_fork.count == @size - 1
+					done = get_side_positions(board_class) - spot_chosen_by_o(board_class)
+					while board_class.valid_position?(done[counter-2]) != true
+						counter = counter + 1
+					end
+					return done[counter-2]
+				end
+			end
+		end
+		"no fork"
+	end
+
+	def block_fork_for_o(board_class)
+		fork_array = []
+		counter = 0
+		if spot_chosen_by_o(board_class).count > 1
+			for each_element in board_class.win
+				matches = each_element & spot_chosen_by_o(board_class)
+				my_fork = each_element - matches
+				if my_fork.count == @size - 1
+					done = get_side_positions(board_class) - spot_chosen_by_x(board_class)
+					while board_class.valid_position?(done[counter-2]) != true
+						counter = counter + 1
+					end
+					return done[counter-2]
+				end
+			end
+		end
+		"no fork"
+	end
+
 	def block_fork(board_class,player)
 		if player.player == "o"
-			create_fork_for_x(board_class)
+			block_fork_for_x(board_class)
 		elsif player.player == "x"
-			create_fork_for_o(board_class)
+			block_fork_for_o(board_class)
 		end
 	end
 
