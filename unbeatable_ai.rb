@@ -18,8 +18,8 @@ class Unbeatable_ai
 
 		choice_array.each {|each_element|
 			if each_element.is_a? Integer
-			if board_class.valid_position?(each_element) == true
-					return each_element
+				if board_class.valid_position?(each_element) == true
+						return each_element
 				end
 			end
 		}
@@ -80,10 +80,11 @@ class Unbeatable_ai
 	board = board_class.board
 	side_array = [2,4,6,8]
 	move = side_array.sample
-	if board.valid_position?(move) == true
-		return move
-	else
-		get_side_positions(board_class)
+		if board.valid_position?(move) == true
+			return move
+		else
+			get_side_positions(board_class)
+		end
 	end
 
 	def take_corner_spot_if_middle_is_chosen(board_class,player)
