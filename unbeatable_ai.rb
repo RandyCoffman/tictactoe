@@ -206,12 +206,6 @@ class Unbeatable_ai
 		# p spot_chosen_by_x(board_class).count
 		if spot_chosen_by_x(board_class) == [2,@size+1] || spot_chosen_by_x(board_class) == [@size+1,2]
 			return 1
-		elsif spot_chosen_by_x(board_class) == [@size-1,@size+@size] || spot_chosen_by_x(board_class) == [@size+@size,@size-1]
-			return @size
-		elsif spot_chosen_by_x(board_class) == [@size*(@size-1)+2,@size*(@size-1)-2] || spot_chosen_by_x(board_class) == [@size*(@size-1)-2,@size*(@size-1)+2]
-			return @size*(@size-1)+1
-		elsif spot_chosen_by_x(board_class) == [@size*(@size-1),@size*(@size-1)+2] || spot_chosen_by_x(board_class) == [@size*(@size-1)+2,@size*(@size-1)]
-			return @size**@size
 		end
 		if spot_chosen_by_x(board_class).count > 1
 			for each_element in board_class.win
@@ -237,12 +231,6 @@ class Unbeatable_ai
 		counter = 0
 		if spot_chosen_by_o(board_class) == [2,@size+1] || spot_chosen_by_o(board_class) == [@size+1,2]
 			return 1
-		elsif spot_chosen_by_o(board_class) == [@size-1,@size+@size] || spot_chosen_by_o(board_class) == [@size+@size,@size-1]
-			return @size
-		elsif spot_chosen_by_o(board_class) == [@size*(@size-1)+2,@size*(@size-1)-2] || spot_chosen_by_o(board_class) == [@size*(@size-1)-2,@size*(@size-1)+2]
-			return @size*(@size-1)+1
-		elsif spot_chosen_by_o(board_class) == [@size*(@size-1),@size*(@size-1)+2] || spot_chosen_by_o(board_class) == [@size*(@size-1)+2,@size*(@size-1)]
-			return @size**@size
 		end
 		if spot_chosen_by_o(board_class).count > 1
 			for each_element in board_class.win
