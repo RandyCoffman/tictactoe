@@ -229,7 +229,7 @@ class Unbeatable_ai
 	def create_fork_for_o(board_class)
 		fork_array = []
 		counter = 0
-		if spot_chosen_by_o(board_class) == [@size-1,@size+1] || spot_chosen_by_o(board_class) == [@size+1,@size-1]
+		if spot_chosen_by_o(board_class) == [2,@size+1] || spot_chosen_by_o(board_class) == [@size+1,2]
 			return 1
 		end
 		if spot_chosen_by_o(board_class).count > 1
