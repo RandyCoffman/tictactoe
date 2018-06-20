@@ -209,7 +209,7 @@ class Unbeatable_ai
 		end
 		if spot_chosen_by_x(board_class).count > 1
 			for each_element in board_class.win
-				matches = each_element & spot_chosen_by_x(board_class)
+				matches = each_element - spot_chosen_by_x(board_class)
 				# p matches
 				# p ""
 				my_fork = each_element - matches
@@ -234,7 +234,7 @@ class Unbeatable_ai
 		end
 		if spot_chosen_by_o(board_class).count > 1
 			for each_element in board_class.win
-				matches = each_element & spot_chosen_by_o(board_class)
+				matches = each_element - spot_chosen_by_o(board_class)
 				my_fork = each_element - matches
 				if my_fork.count == @size - 1
 					done = corner_position(board_class) - spot_chosen_by_x(board_class)
