@@ -9,11 +9,13 @@ require_relative "app_functions.rb"
 enable :sessions
 
 get "/" do
-    erb :page1_board_size
+	session[:size] = 3 # params[:size].to_i
+	# erb :page1_board_size
+	redirect '/player-selection'
 end
 
 post "/post-size" do
- 	session[:size] = params[:size].to_i
+ 	session[:size] = 3 # params[:size].to_i
     redirect "/player-selection"
 end
 
